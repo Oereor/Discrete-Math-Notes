@@ -1,0 +1,69 @@
+\chapter{Graph Theory}
+\section{Basic Concepts}
+\begin{definition}[Graph]
+    A \emph{graph} is an ordered pair $(V, E)$, where $V$ is a set of vertices, and $E$ is a set of edges. The two vertices connected by a certain edge are called \emph{endpoints}. 
+\end{definition}
+
+Graphs are the abstraction of connectivity and intersection information. Note that the endpoints of an edge need not be distinct. In other words, an edge connecting some vertex to itself is allowed; such edge is called a \emph{loop}. 
+
+We can sort graphs into different categories based on the properties of their vertices and edges. For example, by whether the edges are directed or not, by whether there are multiple edges between the same pair of vertices, or by having loops or not. Specifically, we have the following definition of a simple graph. 
+
+\begin{definition}[Simple Graph]
+    A graph is said to be \emph{simple}, if it is undirected and does not have multiple edges or loops.
+\end{definition}
+
+Sometimes we would use the term \emph{simple directed graph}, which refers to the graph that meets the requirements of a simple graph, except being undirected. 
+
+We now introduce the concept of degree of a vertex.
+
+\begin{definition}
+    Given an \emph{undirected} graph $G=(V,E)$, two vertices $u,v\in V$ are called \emph{adjacent} (or \emph{neighbors}) if there exists an edge $e\in E$ connecting them. Such $e$ is called \emph{incident} with $u,v$. 
+
+    The \emph{neighborhood} of a vertex $v$, denoted $\mathcal{N}(v)$, is the set of all neighbors of $v$. If $A\subseteq V$, then $\mathcal{N}(A)$ is defined as $\displaystyle\mathcal{N}(A)=\bigcup_{v\in A}\mathcal{N}(v)$. 
+\end{definition}
+
+\begin{definition}[Degree]
+    Given an undirected graph $G=(V,E)$, the \emph{degree} of some $v\in V$ is the number of edges incident with $v$. Any loop contributes twice to the degree of its vertex. The degree of $v$ is denoted by $\deg(v)$.
+\end{definition}
+
+Note that we have an alternative method to calculate the degree of $v$: 
+\[\deg(v)=|\{e\mid v\text{ is the first endpoint}\}|+|\{e\mid v\text{ is the second endpoint}\}|.\]
+Thus we immediately have the following theorem, also known as \emph{Handshaking Lemma}. 
+
+\begin{theorem}
+    If $G=(V,E)$ is undirected, then $\displaystyle\sum_{v\in V}\deg(v)=2|E|$. 
+\end{theorem}
+
+In other words, in an undirected graph, the sum of the degrees of all vertices is twice the number of edges. 
+
+\begin{proof}
+    Since we can write 
+    \[\deg(v)=\sum_{e\in E}\left( \mathbf{1}_{\{v\text{ is the first endpoint of }e\}} + \mathbf{1}_{\{v\text{ is the second endpoint of }e\}} \right),\] 
+    we have 
+    \begin{align*}
+        \sum_{v\in V}\deg(v)&=\sum_{v\in V}\sum_{e\in E}\left( \mathbf{1}_{\{v\text{ is the first endpoint of }e\}} + \mathbf{1}_{\{v\text{ is the second endpoint of }e\}} \right)\\
+        &=\sum_{e\in E}\sum_{v\in V}\left( \mathbf{1}_{\{v\text{ is the first endpoint of }e\}} + \mathbf{1}_{\{v\text{ is the second endpoint of }e\}} \right)\\
+        &=2|E|.
+    \end{align*}
+\end{proof}
+
+\begin{corollary}
+    In an undirected graph, the number of vertices with odd degree is even.
+\end{corollary}
+
+\section{Paths and Circuits}
+\begin{definition}[Path]
+    Suppose $G=(V,E)$ is an undirected graph. A \emph{path} of length $n\ (n\geq 0)$ from $u$ to $v$ is a finite sequence of edges $e_1,e_2,\cdots,e_n$ such that there exists a sequence of vertices $v_0,v_1,\cdots,v_n$ with $v_0=u$, $v_n=v$, and for each $i=1,2,\cdots,n$, $v_{i-1}$ and $v_i$ are the endpoints of $e_i$.
+
+    A path is called \emph{simple} if it does not contain duplicate edges. We say that the path $e_1,\cdots,e_n$ \emph{traverses} these edges, and \emph{passes through} the vertices $v_0,v_1,\cdots,v_n$.
+\end{definition}
+
+For simplicity, when the graph is simple, we may also write the path as a sequence of vertices $v_0,v_1,\cdots,v_n$. 
+
+\begin{definition}[Circuit]
+    A \emph{circuit} is a path of positive length, whose endpoints are the same vertex. A circuit is also called \emph{simple} if it does not contain duplicate edges.
+\end{definition}
+
+Note that a simple path does not necessarily have distinct vertices. Recall the definition of a loop, and we assert that \emph{a loop is a path of length $1$; moreover, it is a circuit.}
+
+We can define path and circuits in directed graphs in a similar way, with the additional requirement that for each $i=1,2,\cdots,n$, $e_i$ is a directed edge from $v_{i-1}$ to $v_i$.
