@@ -1,4 +1,0 @@
-\contentsline {chapter}{\numberline {1}Graph Theory}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Basic Concepts}{1}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Paths and Circuits}{2}{section.1.2}%
-\contentsfinish 
