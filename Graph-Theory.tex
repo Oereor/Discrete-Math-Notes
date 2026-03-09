@@ -51,14 +51,40 @@ In other words, in an undirected graph, the sum of the degrees of all vertices i
     In an undirected graph, the number of vertices with odd degree is even.
 \end{corollary}
 
-\section{Paths and Circuits}
-\begin{definition}[Path]
-    Suppose $G=(V,E)$ is an undirected graph. A \emph{path} of length $n\ (n\geq 0)$ from $u$ to $v$ is a finite sequence of edges $e_1,e_2,\cdots,e_n$ such that there exists a sequence of vertices $v_0,v_1,\cdots,v_n$ with $v_0=u$, $v_n=v$, and for each $i=1,2,\cdots,n$, $v_{i-1}$ and $v_i$ are the endpoints of $e_i$.
+We point out some key terminologies in directed graphs that are different from those in undirected graphs. 
 
-    A path is called \emph{simple} if it does not contain duplicate edges. We say that the path $e_1,\cdots,e_n$ \emph{traverses} these edges, and \emph{passes through} the vertices $v_0,v_1,\cdots,v_n$.
+\begin{definition}[Directed Edge]
+    If $G=(V, E)$ is a directed graph and $e\in E$ is from $u$ to $v$, then:
+    \begin{itemize}
+        \item $u$ is adjacent \emph{to} $v$, and $v$ is adjacent \emph{from} $u$;
+        \item $u$ is the \emph{initial} vertex of $e$, and $v$ is the \emph{terminal} (or \emph{end}) vertex of $e$.
+    \end{itemize}
 \end{definition}
 
-For simplicity, when the graph is simple, we may also write the path as a sequence of vertices $v_0,v_1,\cdots,v_n$. 
+We also have the concepts of \emph{in-degree} and \emph{out-degree} for vertices in directed graphs.
+
+\begin{definition}[In- and Out-Degrees]
+    If $G=(V, E)$ is a directed graph and $v\in V$, we define
+    \begin{itemize}
+        \item (In-degree) $\deg^-(v):=|\{e\in E\mid e\text{ is associated with }(u',v')\text{ and }v=v'\}|$;
+        \item (Out-degree) $\deg^+(v):=|\{e\in E\mid e\text{ is associated with }(u',v')\text{ and }v=u'\}|$.
+    \end{itemize}
+\end{definition}
+
+The relationship between in-degrees and out-degrees is given by the following theorem.
+
+\begin{theorem}
+    If $G=(V,E)$ is a finite directed graph, then \[\sum_{v\in V}\deg^-(v)=\sum_{v\in V}\deg^+(v)=|E|.\]
+\end{theorem}
+
+\section{Paths and Circuits}
+\begin{definition}[Path]
+    Suppose $G=(V,E)$ is an undirected graph. A \emph{path} of length $n\ (n\geq 0)$ from $u$ to $v$ is a finite sequence of edges $e_1,e_2,\dots,e_n$ such that there exists a sequence of vertices $v_0,v_1,\dots,v_n$ with $v_0=u$, $v_n=v$, and for each $i=1,2,\dots,n$, $v_{i-1}$ and $v_i$ are the endpoints of $e_i$.
+
+    A path is called \emph{simple} if it does not contain duplicate edges. We say that the path $e_1,\dots,e_n$ \emph{traverses} these edges, and \emph{passes through} the vertices $v_0,v_1,\dots,v_n$.
+\end{definition}
+
+For simplicity, when the graph is simple, we may also write the path as a sequence of vertices $v_0,v_1,\dots,v_n$. 
 
 \begin{definition}[Circuit]
     A \emph{circuit} is a path of positive length, whose endpoints are the same vertex. A circuit is also called \emph{simple} if it does not contain duplicate edges.
@@ -66,4 +92,112 @@ For simplicity, when the graph is simple, we may also write the path as a sequen
 
 Note that a simple path does not necessarily have distinct vertices. Recall the definition of a loop, and we assert that \emph{a loop is a path of length $1$; moreover, it is a circuit.}
 
-We can define path and circuits in directed graphs in a similar way, with the additional requirement that for each $i=1,2,\cdots,n$, $e_i$ is a directed edge from $v_{i-1}$ to $v_i$.
+We can define path and circuits in directed graphs in a similar way, with the additional requirement that for each $i=1,2,\dots,n$, $e_i$ is a directed edge from $v_{i-1}$ to $v_i$.
+
+\section{Connectedness}
+In this section we shall talk about connectedness. The behavior of connectedness is quite different between directed and undirected graphs, and we will begin with the simpler one, i.e., undirected graphs. 
+
+\begin{definition}
+    Suppose $G=(V,E)$ is an undirected graph. Two vertices $u,v\in V$ are \emph{connected} if there is a path from $u$ to $v$ in $G$. 
+\end{definition}
+
+Note that in this definition, we did not explicitly require the path to be simple. In fact, if there is a path from $u$ to $v$, then there is also a simple path from $u$ to $v$. We shall not prove this fact here, and in future discussions we will not make use of it as well. However, knowing this fact can sometimes be helpful in understanding the concept of connectedness.
+
+The following theorem indicates that connectedness is an equivalence relation.
+
+\begin{theorem}
+    In an undirected graph, connectedness is an equivalence relation. That is, 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item (Reflexive) Any vertex is connected to itself;
+        \item (Symmetric) If $u$ is connected to $v$, then $v$ is connected to $u$;
+        \item (Transitive) If $u$ is connected to $v$ and $v$ is connected to $w$, then $u$ is connected to $w$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    For any vertex $v$, there is a path of length $0$ from $v$ to itself, so (a) holds.
+
+    If there is a path from $u$ to $v$, then we can reverse the path to obtain a path from $v$ to $u$. In symbols, if $e_1,\dots,e_n$ is a path from $u$ to $v$, then $e_n,\dots,e_1$ is a path from $v$ to $u$. Hence (b) holds.
+
+    If there is a path from $u$ to $v$ and a path from $v$ to $w$, we can concatenate these two paths to obtain a path from $u$ to $w$. In symbols: If $e_1,\dots,e_n$ is a path from $u$ to $v$, and $f_1,\dots,f_m$ is a path from $v$ to $w$, then $e_1,\dots,e_n,f_1,\dots,f_m$ is a path from $u$ to $w$. This proves (c).
+\end{proof}
+
+With the connectedness of vertices defined, we can define the connectedness of the whole graph.
+
+\begin{definition}[Connected Graph]
+    An undirected graph $G=(V,E)$ is \emph{connected} if every pair of vertices in $V$ are connected. Otherwise, it is \emph{disconnected}.
+\end{definition}
+
+To further explore the properties of connected graphs, we shall define some concepts first. 
+
+\begin{definition}[Subgraph]
+     A \emph{subgraph} of a graph $G=(V,E)$ is a graph $G'=(V',E')$ such that $V'\subseteq V$ and $E'\subseteq E$. $G'$ is said to be \emph{proper} if $G'\neq G$. 
+\end{definition}
+
+\begin{definition}[Induced Subgraph]
+    Suppose $G=(V,E)$ is a graph and $W\subseteq V$ is a subset of vertices. The subgraph \emph{induced} by $W$ consists of all vertices in $W$ and all edges in $E$ whose endpoints both lie in $W$. 
+\end{definition}
+
+\begin{definition}[Connected Component]
+    A \emph{connected component} of a graph $G=(V,E)$ is a maximal connected subgraph of $G$. Here ``maximal'' means that the subgraph is not a proper subgraph of any other connected subgraph of $G$.
+\end{definition}
+
+We now discuss an important theorem regarding connected components.
+
+\begin{theorem}\label{thm:theorem about connected components}
+    Suppose $G$ is a nonempty undirected graph, and $G'$ is a subgraph of $G$. Then $G'$ is a connected component of $G$ if and only if there is a vertex $v$ such that $G'$ is the subgraph induced by the set of vertices connected to $v$, namely, the set $W=\{u\mid u\text{ is connected to }v\}$. 
+\end{theorem}
+
+\begin{proof}
+    Assume $G'=(V', E')$ is a connected component of $G$. We can pick any vertex $v$ in $G'$ and construct $W$ with this $v$. Now we first show that $V'=W$. 
+
+    If $v'\in V'$ and $v'\not\in W$, then $v'$ is not connected to $v$, which contradicts the fact that $G'$ is connected. So $V'\subseteq W$. If $u\in W$ and $u\not\in V'$, then $u$ is connected to $v$, so there is a path from $u$ to $v$. By adding this path to $G'$, we can obtain a connected subgraph that contains $G'$ as a proper subgraph, which contradicts the maximality of $G'$. So $W\subseteq V'$. Hence $V'=W$.
+
+    Then we prove that $G'$ is the subgraph induced by $W$. If there is an edge $e$ in $E$ whose endpoints both lie in $W$ but $e\not\in E'$, then we can add $e$ to $G'$ to obtain a connected subgraph that contains $G'$ as a proper subgraph. This yields a contradiction. 
+
+    Conversely, suppose $G'$ is the subgraph induced by $W$. Then $G'$ is connected since any two vertices in $W$ are connected (by the transitive property) in $G$. Since $G'$ contains all edges in $G$ that connects the vertices in $W$, the vertices are also connected in $G'$. In symbols, if $u_1$ and $u_2$ are both in $G'$, then there is a path $e_1,\cdots,e_n$ from $u_1$ to $u_2$ in $G$, and since all vertices in this path are in $W$, all edges in this path are in $G'$. Hence there is a path from $u_1$ to $u_2$ in $G'$.
+
+    Moreover, if there is a connected subgraph $H$ that contains $G'$ as a proper subgraph, then there is a vertex in $H$ (so that it is connected to $v$) that is not in $G'$, which contradicts the definition of $W$. Hence $G'$ is a connected component of $G$.
+\end{proof}
+
+Now we turn to the connectedness of directed graphs. The situation is more complicated here, but we can still define a type of connectedness that is similar to the one in undirected graphs.
+
+\begin{definition}[Strongly Connected]
+    Suppose $G=(V,E)$ is a directed graph. Two vertices $u,v\in V$ are \emph{strongly connected} if there is a path from $u$ to $v$ and a path from $v$ to $u$ in $G$.
+\end{definition}
+
+In directed graphs, instead of saying connectedness of two vertices, we say that $v\in V$ is \emph{reachable} from $u\in V$ if there is a path from $u$ to $v$. Strongly connected vertices are also called \emph{mutually reachable} vertices. We can also define the concept of \emph{strongly connected graphs} and \emph{strongly connected components} in a similar way as we did for undirected graphs, which we shall not do here to avoid redundancy.
+
+It is easy to see that strongly connectedness is also an equivalence relation. The proof is quite similar to its counterpart in undirected graphs, hence we shall not present the details here. 
+
+\cref{thm:theorem about connected components} also holds for strongly connected components in directed graphs, with slight modifications in statement. We now present the directed version of the theorem without proof.
+
+\begin{theorem}
+    Suppose $G$ is a nonempty directed graph, and $G'$ is a subgraph of $G$. Then $G'$ is a strongly connected component of $G$ if and only if there is a vertex $v$ such that $G'$ is the subgraph induced by the set of vertices strongly connected to $v$, namely, the set $W=\{u\mid u\text{ is strongly connected to }v\}$.
+\end{theorem}
+
+Basically what we did was to replace the term ``connected'' with ``strongly connected'' in \cref{thm:theorem about connected components}.
+
+The following theorem depicts the connectedness between strongly connected components. 
+
+\begin{theorem}
+    Suppose $G$ is a directed graph, $G'=(V',E')$ and $G''=(V'',E'')$ are two distinct strongly connected components of $G$. Then for any $u_1,u_2\in V'$ and any $v_1,v_2\in V''$, $v_1$ is reachable from $u_1$ if and only if $v_2$ is reachable from $u_2$.
+\end{theorem}
+
+This theorem indicates that if there is a path from some vertex in $G'$ to some vertex in $G''$, then there is a path from any vertex in $G'$ to any vertex in $G''$. 
+
+\begin{proof}
+    If $v_1$ is reachable from $u_1$, then there is a path from $u_1$ to $v_1$. Since $u_2$ is strongly connected to $u_1$ and $v_2$ is strongly connected to $v_1$, there is a path from $u_2$ to $u_1$ and a path from $v_1$ to $v_2$. By concatenating these paths, we can obtain a path from $u_2$ to $v_2$. 
+     
+    Proof for the converse is similar. 
+\end{proof}
+
+\begin{theorem}
+    If $G$ is a directed graph and $e_1,\cdots,e_n$ is a circuit passing through $x_0,x_1,\cdots,x_n=x_0$, then $x_0,x_1,\cdots,x_n$ belong to the same strongly connected component of $G$.
+\end{theorem}
+
+In other words, there is no circuit that passes through two distinct strongly connected components. 
+
+\begin{proof}
+    We prove by contradiction. Assume $x_0,x_1,\cdots,x_n$ do not belong to the same strongly connected component. Then there exist two vertices in this circuit that are not strongly connected. However, since the path $x_0,\dots,x_n$ is a circuit, there must exist a path between any two vertices $(x_i,x_j)$, where $x_i$ is the initial vertex of the path and $x_j$ is the terminal vertex. By exchanging the roles of $x_i$ and $x_j$, a contradiction is obtained. 
+\end{proof}
