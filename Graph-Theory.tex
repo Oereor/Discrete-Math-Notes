@@ -166,7 +166,7 @@ Now we turn to the connectedness of directed graphs. The situation is more compl
     Suppose $G=(V,E)$ is a directed graph. Two vertices $u,v\in V$ are \emph{strongly connected} if there is a path from $u$ to $v$ and a path from $v$ to $u$ in $G$.
 \end{definition}
 
-In directed graphs, instead of saying connectedness of two vertices, we say that $v\in V$ is \emph{reachable} from $u\in V$ if there is a path from $u$ to $v$. Strongly connected vertices are also called \emph{mutually reachable} vertices. We can also define the concept of \emph{strongly connected graphs} and \emph{strongly connected components} in a similar way as we did for undirected graphs, which we shall not do here to avoid redundancy.
+In directed graphs, instead of saying connectedness of two vertices, we say that $v\in V$ is \emph{reachable} from $u\in V$ if there is a path from $u$ to $v$; note that here the order of vertices matters. Strongly connected vertices are also called \emph{mutually reachable} vertices. We can also define the concept of \emph{strongly connected graphs} and \emph{strongly connected components} in a similar way as we did for undirected graphs, which we shall not do here to avoid redundancy.
 
 It is easy to see that strongly connectedness is also an equivalence relation. The proof is quite similar to its counterpart in undirected graphs, hence we shall not present the details here. 
 
@@ -193,11 +193,11 @@ This theorem indicates that if there is a path from some vertex in $G'$ to some 
 \end{proof}
 
 \begin{theorem}
-    If $G$ is a directed graph and $e_1,\cdots,e_n$ is a circuit passing through $x_0,x_1,\cdots,x_n=x_0$, then $x_0,x_1,\cdots,x_n$ belong to the same strongly connected component of $G$.
+    If $G$ is a directed graph and $e_1,\dots,e_n$ is a circuit passing through $x_0,x_1,\dots,x_n=x_0$, then $x_0,x_1,\dots,x_n$ belong to the same strongly connected component of $G$.
 \end{theorem}
 
 In other words, there is no circuit that passes through two distinct strongly connected components. 
 
 \begin{proof}
-    We prove by contradiction. Assume $x_0,x_1,\cdots,x_n$ do not belong to the same strongly connected component. Then there exist two vertices in this circuit that are not strongly connected. However, since the path $x_0,\dots,x_n$ is a circuit, there must exist a path between any two vertices $(x_i,x_j)$, where $x_i$ is the initial vertex of the path and $x_j$ is the terminal vertex. By exchanging the roles of $x_i$ and $x_j$, a contradiction is obtained. 
+    We prove by contradiction. Assume $x_0,x_1,\dots,x_n$ do not belong to the same strongly connected component. Then there exist two vertices in this circuit that are not strongly connected. However, since the path $x_0,\dots,x_n$ is a circuit, there must exist a path between any two vertices $(x_i,x_j)$, where $x_i$ is the initial vertex of the path and $x_j$ is the terminal vertex. By exchanging the roles of $x_i$ and $x_j$, we obtain a path from $x_j$ to $x_i$, which contradicts the assumption that $x_i$ and $x_j$ are not strongly connected. 
 \end{proof}

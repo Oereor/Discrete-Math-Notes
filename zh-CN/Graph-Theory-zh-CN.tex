@@ -157,47 +157,47 @@
 
     反过来, 假设 $G'$ 是由 $W$ 导出的子图. 那么由于 $W$ 中的任意两个顶点在 $G$ 中都是连通的, 根据传递性, $G'$ 在 $G$ 中也是连通的. 并且, $G'$ 包含了 $G$ 中连接 $W$ 中顶点的所有边, 因此这些顶点在 $G'$ 中也是连通的. 用符号表示, 如果 $u_1$ 和 $u_2$ 都在 $G'$ 中, 则 $G$ 中存在一条从 $u_1$ 到 $u_2$ 的路径 $e_1,\cdots,e_n$; 由于这条路径中的顶点都在 $W$ 中, 那么所有的边也必定都在 $G'$ 中. 因此在 $G'$ 中也存在一条从 $u_1$ 到 $u_2$ 的路径.
 
-    另一方面, 如果存在一个连通子图 $H$ 使得 $G'$ 为其真子图, 则 $H$ 中存在一个顶点 (与 $v$ 连通) 不在 $G'$ 中, 这与 $W$ 的定义矛盾. 因此 $G'$ 是 $G$ 的一个连通块.
+    另一方面, 如果存在一个连通子图 $H$ 使得 $G'$ 为其真子图, 则 $H$ 中存在一个顶点 (显然, 此顶点与 $v$ 连通) 不在 $G'$ 中, 这与 $W$ 的定义矛盾. 因此 $G'$ 是 $G$ 的一个连通块.
 \end{proof}
 
-Now we turn to the connectedness of directed graphs. The situation is more complicated here, but we can still define a type of connectedness that is similar to the one in undirected graphs.
+现在我们来考察有向图. 在有向图中, 连通性更为复杂, 不过我们仍然可以定义一种类似于无向图中连通的关系.
 
-\begin{definition}[Strongly Connected]
-    Suppose $G=(V,E)$ is a directed graph. Two vertices $u,v\in V$ are \textbf{strongly connected} if there is a path from $u$ to $v$ and a path from $v$ to $u$ in $G$.
+\begin{definition}[强连通]
+    设 $G=(V,E)$ 是一个有向图, $u,v\in V$. 如果在 $G$ 中既存在从 $u$ 到 $v$ 的路径, 又存在从 $v$ 到 $u$ 的路径, 则称 $u$ 和 $v$ \textbf{强连通}.
 \end{definition}
 
-In directed graphs, instead of saying connectedness of two vertices, we say that $v\in V$ is \textbf{reachable} from $u\in V$ if there is a path from $u$ to $v$. Strongly connected vertices are also called \textbf{mutually reachable} vertices. We can also define the concept of \textbf{strongly connected graphs} and \textbf{strongly connected components} in a similar way as we did for undirected graphs, which we shall not do here to avoid redundancy.
+在有向图中, 如果存在一条从 $u\in V$ 到 $v\in V$ 的路径, 我们不称这两顶点连通, 而是说 $v$ 从 $u$ \textbf{可达}; 这里要注意两个顶点的顺序. 强连通的顶点也被称为\textbf{相互可达}的顶点. 我们也可以以类似于无向图的方式定义\textbf{强连通图}和\textbf{强连通块}, 这里不再赘述.
 
-It is easy to see that strongly connectedness is also an equivalence relation. The proof is quite similar to its counterpart in undirected graphs, hence we shall not present the details here. 
+显见, 强连通也是等价关系. 证明与无向图中的连通性类似, 这里就不详细展开了.
 
-\cref{thm:theorem about connected components} also holds for strongly connected components in directed graphs, with slight modifications in statement. We now present the directed version of the theorem without proof.
-
-\begin{theorem}
-    Suppose $G$ is a nonempty directed graph, and $G'$ is a subgraph of $G$. Then $G'$ is a strongly connected component of $G$ if and only if there is a vertex $v$ such that $G'$ is the subgraph induced by the set of vertices strongly connected to $v$, namely, the set $W=\{u\mid u\text{ is strongly connected to }v\}$.
-\end{theorem}
-
-Basically what we did was to replace the term ``connected'' with ``strongly connected'' in \cref{thm:theorem about connected components}.
-
-The following theorem depicts the connectedness between strongly connected components. 
+\cref{thm:theorem about connected components} 也适用于有向图中的强连通块, 只是需要对定理的表述进行一些修改. 下面我们给出定理的有向版本, 略去证明.
 
 \begin{theorem}
-    Suppose $G$ is a directed graph, $G'=(V',E')$ and $G''=(V'',E'')$ are two distinct strongly connected components of $G$. Then for any $u_1,u_2\in V'$ and any $v_1,v_2\in V''$, $v_1$ is reachable from $u_1$ if and only if $v_2$ is reachable from $u_2$.
+    设 $G$ 是一个非空的有向图, $G'$ 是 $G$ 的一个子图. 那么 $G'$ 是 $G$ 的一个强连通块, 当且仅当存在一个顶点 $v$, 使得 $G'$ 是由与 $v$ 强连通的顶点集合 $W=\{u\mid u\,\text{与}\,v\,\text{强连通}\}$ 导出的子图.
 \end{theorem}
 
-This theorem indicates that if there is a path from some vertex in $G'$ to some vertex in $G''$, then there is a path from any vertex in $G'$ to any vertex in $G''$. 
+基本上, 我们只是将\cref{thm:theorem about connected components} 中的 ``连通'' 替换成了 ``强连通''.
+
+下面这个定理刻画了强连通块之间连通性的结构.
+
+\begin{theorem}
+    设 $G$ 是一个有向图, $G'=(V',E')$ 和 $G''=(V'',E'')$ 是 $G$ 的两个不同的强连通块, 则对于任意 $u_1,u_2\in V'$ 和任意 $v_1,v_2\in V''$, $v_1$ 从 $u_1$ 可达当且仅当 $v_2$ 从 $u_2$ 可达.
+\end{theorem}
+
+此定理表明, 如果 $G'$ 中的某个顶点可以到达 $G''$ 中的某个顶点, 则 $G'$ 中的任意顶点都可以到达 $G''$ 中的任意顶点.
 
 \begin{proof}
-    If $v_1$ is reachable from $u_1$, then there is a path from $u_1$ to $v_1$. Since $u_2$ is strongly connected to $u_1$ and $v_2$ is strongly connected to $v_1$, there is a path from $u_2$ to $u_1$ and a path from $v_1$ to $v_2$. By concatenating these paths, we can obtain a path from $u_2$ to $v_2$. 
-     
-    Proof for the converse is similar. 
+    如果 $v_1$ 从 $u_1$ 可达, 则存在一条从 $u_1$ 到 $v_1$ 的路径. 由于 $u_2$ 与 $u_1$ 强连通, $v_2$ 与 $v_1$ 强连通, 存在一条从 $u_2$ 到 $u_1$ 的路径和一条从 $v_1$ 到 $v_2$ 的路径. 将这些路径首尾衔接, 就得到了从 $u_2$ 到 $v_2$ 的路径.
+
+    另一个方向的证明类似.
 \end{proof}
 
 \begin{theorem}
-    If $G$ is a directed graph and $e_1,\cdots,e_n$ is a circuit passing through $x_0,x_1,\cdots,x_n=x_0$, then $x_0,x_1,\cdots,x_n$ belong to the same strongly connected component of $G$.
+    如果 $G$ 是一个有向图, $e_1,\dots,e_n$ 是一条经过 $x_0,x_1,\dots,x_n=x_0$ 的回路, 则 $x_0,x_1,\dots,x_n$ 属于 $G$ 的同一个强连通块.
 \end{theorem}
 
-In other words, there is no circuit that passes through two distinct strongly connected components. 
+也就是说, 不存在经过两个不同强连通块的回路.
 
 \begin{proof}
-    We prove by contradiction. Assume $x_0,x_1,\cdots,x_n$ do not belong to the same strongly connected component. Then there exist two vertices in this circuit that are not strongly connected. However, since the path $x_0,\dots,x_n$ is a circuit, there must exist a path between any two vertices $(x_i,x_j)$, where $x_i$ is the initial vertex of the path and $x_j$ is the terminal vertex. By exchanging the roles of $x_i$ and $x_j$, a contradiction is obtained. 
+    用反证法. 假设 $x_0,x_1,\cdots,x_n$ 不属于同一个强连通块, 则存在两个顶点在这个回路中不强连通. 但是, 由于路径 $x_0,\dots,x_n$ 是一个回路, 对于任意两个顶点 $(x_i,x_j)$, 都存在一条从 $x_i$ 到 $x_j$ 的路径. 交换 $x_i$ 和 $x_j$ 的地位, 就得到了从 $x_j$ 到 $x_i$ 的路径, 与 $x_i$ 和 $x_j$ 不强连通的假设矛盾.
 \end{proof}
