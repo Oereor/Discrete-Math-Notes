@@ -28,7 +28,7 @@ We now introduce the concept of degree of a vertex.
 
 Note that we have an alternative method to calculate the degree of $v$: 
 \[\deg(v)=|\{e\mid v\text{ is the first endpoint}\}|+|\{e\mid v\text{ is the second endpoint}\}|.\]
-Thus we immediately have the following theorem, also known as \emph{Handshaking Lemma}. 
+Thus we immediately have the following theorem, also known as \emph{Handshaking Theorem}. 
 
 \begin{theorem}
     If $G=(V,E)$ is undirected, then $\displaystyle\sum_{v\in V}\deg(v)=2|E|$. 
@@ -84,13 +84,13 @@ The relationship between in-degrees and out-degrees is given by the following th
     A path is called \emph{simple} if it does not contain duplicate edges. We say that the path $e_1,\dots,e_n$ \emph{traverses} these edges, and \emph{passes through} the vertices $v_0,v_1,\dots,v_n$.
 \end{definition}
 
-For simplicity, when the graph is simple, we may also write the path as a sequence of vertices $v_0,v_1,\dots,v_n$. 
+For simplicity, when the graph is simple, we may also write the path as a sequence of the vertices $v_0,v_1,\dots,v_n$ that it passes through. 
 
 \begin{definition}[Circuit]
     A \emph{circuit} is a path of positive length, whose endpoints are the same vertex. A circuit is also called \emph{simple} if it does not contain duplicate edges.
 \end{definition}
 
-Note that a simple path does not necessarily have distinct vertices. Recall the definition of a loop, and we assert that \emph{a loop is a path of length $1$; moreover, it is a circuit.}
+Note that a simple path does not necessarily pass through distinct vertices. Recall the definition of a loop, and we see that \emph{a loop is a path of length $1$; moreover, it is a circuit.}
 
 We can define path and circuits in directed graphs in a similar way, with the additional requirement that for each $i=1,2,\dots,n$, $e_i$ is a directed edge from $v_{i-1}$ to $v_i$.
 
