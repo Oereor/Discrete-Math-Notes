@@ -94,8 +94,8 @@ Note that a simple path does not necessarily pass through distinct vertices. Rec
 
 We can define path and circuits in directed graphs in a similar way, with the additional requirement that for each $i=1,2,\dots,n$, $e_i$ is a directed edge from $v_{i-1}$ to $v_i$.
 
-\section{Connectedness}
-In this section we shall talk about connectedness. The behavior of connectedness is quite different between directed and undirected graphs, and we will begin with the simpler one, i.e., undirected graphs. 
+\section{Connectivity}\label{sec:Connectivity}
+In this section we shall talk about connectivity of graphs. The behavior of connectedness is quite different between directed and undirected graphs, and we will begin with the simpler one, i.e., undirected graphs. 
 
 \begin{definition}
     Suppose $G=(V,E)$ is an undirected graph. Two vertices $u,v\in V$ are \emph{connected} if there is a path from $u$ to $v$ in $G$. 
@@ -200,4 +200,95 @@ In other words, there is no circuit that passes through two distinct strongly co
 
 \begin{proof}
     We prove by contradiction. Assume $x_0,x_1,\dots,x_n$ do not belong to the same strongly connected component. Then there exist two vertices in this circuit that are not strongly connected. However, since the path $x_0,\dots,x_n$ is a circuit, there must exist a path between any two vertices $(x_i,x_j)$, where $x_i$ is the initial vertex of the path and $x_j$ is the terminal vertex. By exchanging the roles of $x_i$ and $x_j$, we obtain a path from $x_j$ to $x_i$, which contradicts the assumption that $x_i$ and $x_j$ are not strongly connected. 
+\end{proof}
+
+Now we consider the effects of adding or removing edges in a graph, as described by the following theorem. 
+
+\begin{theorem}
+    Suppose $G=(V,E)$ and $G'=(V,E\cup\{e_0\})$, where $e_0\not\in E$ and $e_0$ connects the vertices $u,v$. Then
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item for any $x,y\in V$, if $x$ and $y$ are connected in $G$, then they are also connected in $G'$. 
+        \item if $u$ and $v$ are connected, then for any $x,y\in V$, $x$ and $y$ are connected in $G$ if and only if they are connected in $G'$. 
+        \item if $u$ and $v$ are not connected in $G$, then for any $x\in V$, $x$ is connected to $u$ in $G'$ if and only if $x$ is connected to $v$ in $G'$; if and only if $x$ is connected to $u$ or $v$ in $G$. 
+        \item for any $x,y\in V$, if $x$ and $y$ are not connected in $G$ but connected in $G'$, then $x,y,u,v$ are connected in $G'$. 
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    Part (a) is trivial, since $G$ is a subgraph of $G'$. 
+
+    For part (b), one direction follows directed from part (a). For the converse, suppose $x$ and $y$ are connected in $G'$. Then there is a path from $x$ to $y$ in $G'$. If this path does not use the edge $e_0$, then it is also a path in $G$, so $x$ and $y$ are connected in $G$. Otherwise the path uses $e_0$, say it goes from $x$ to $u$ to $v$ to $y$ (or $x$ to $v$ to $u$ to $y$, which is basically the same), then since $u$ and $v$ are connected in $G$, we can replace the edge $e_0$ with a path from $u$ to $v$ in $G$ to obtain a path from $x$ to $y$ in $G$. Hence $x$ and $y$ are connected in $G$.
+
+    Proof of part (c) includes 4 different directions, 3 of which are trivial. The only hard direction is to prove that if $x$ is connected to $u$ in $G'$, then $x$ is connected to $u$ or $v$ in $G$. 
+
+    By the assumption, there exists a path from $x$ to $u$ in $G'$. If the path does not contain $e_0$ then we are done. Otherwise, suppose the path is $e_1,\dots,e_n$, passing through $x_0=x, x_1, \dots, x_m=u$, and $e_j=e_0$ is the first time that $e_0$ appears in the sequence. Then either $x_{j-1}=u$ or $x_{j-1}=v$, and since $x_{j-1}$ is connected to $x$, we see that $x$ is connected either to $u$ or to $v$. 
+
+    Part (d) follows from the fact that the path from $x$ to $y$ in $G'$ must contain $e_0$. 
+\end{proof}
+
+\section{Trees}
+Trees are a special type of graphs. 
+
+\begin{definition}[Tree]
+    A \emph{tree} is a connected undirected graph that does not contain any simple circuit.
+\end{definition}
+
+In \cref{sec:Connectivity} we stated the following fact without proof. Now we prove it here. 
+
+\begin{lemma}
+    If there exists a path from $u$ to $v$, then there must also exist a simple path from $u$ to $v$. 
+\end{lemma}
+
+\begin{proof}
+    Since the length of paths are bounded below, among all paths from $u$ to $v$, there must exist a shortest one. If this one is not simple, say it's $e_1,\dots,e_n$ with $e_i=e_j=e_0\ (i\neq j)$. Then we can just erase $e_0$ from the path. Here ``erasing'' can be divided into two cases: $x_{i-1}=x_{j-1}$, or $x_{i-1}=x_j$. In the first case, we simply connect $x_{i-1}$ with $x_j$; in the second case, we connect $x_{i-1}$ with $x_{j+1}$. Hence in either case, we can obtain a shorter path from $u$ to $v$, contradicting our assumption. 
+\end{proof}
+
+The following theorem depicts a key property of trees, i.e., it is the ``maximal'' connected graph without circuits, and ``minimal'' connected graph.
+
+\begin{theorem}\label{thm:key property of trees}
+    If we add an edge to a tree, the graph will have a simple circuit; if we remove an edge from a tree, the graph will become disconnected. 
+\end{theorem}
+
+\begin{proof}
+    If we add an edge between $u,v$, then since $u$ and $v$ are already connected, we can get a path $u,\dots,v,u$, which is a circuit. 
+
+    If we remove an edge between $u,v$ and keep the graph connected, then by the first part of our proof, adding the edge back will create a simple circuit in the tree, which is a contradiction. 
+\end{proof}
+
+Trees can be categorized into \emph{rooted tree} and \emph{unrooted tree}, by whether a vertex is designated to be the root. We shall discuss unrooted tree first. 
+
+\begin{definition}[Leaf]
+    A vertex is a \emph{leaf} in a tree if its degree is $1$. 
+\end{definition}
+
+The next theorem guarentees the existence of leaf in trees. 
+
+\begin{theorem}\label{thm:tree has at least one leaf}
+    Every tree with at least two vertices has at least one leaf.
+\end{theorem}
+
+\begin{proof}
+    Since trees are connected, we can pick any vertex $v$ and find a longest path from $v$ to some vertex $u$. Then $u$ is a leaf, since if it is not, we can extend the path to get a longer one, which contradicts the assumption.
+\end{proof}
+
+\begin{corollary}
+    Every tree with at least two vertices has at least two leaves.
+\end{corollary}
+
+\begin{proof}
+    In the proof of \cref{thm:tree has at least one leaf} we found a leaf $u$. Now we do the same operation again with $u$ in the place of $v$ to find another leaf. Clearly this new leaf cannot be $u$ since no circuit exists in a tree. Hence we have found two distinct leaves.
+\end{proof}
+
+We have the following theorem that characterizes trees in terms of the number of vertices and edges.
+
+\begin{theorem}
+    If $G=(V,E)$ is a tree, then $|E|=|V|-1$.
+\end{theorem}
+
+\begin{proof}
+    We prove by induction on the number of vertices. 
+    
+    If $|V|=1$, then $|E|=0$, so the statement holds. 
+    
+    Assume the statement holds for any tree with less than $n$ vertices, where $n\geq 2$. Now we consider a tree $G$ with $n$ vertices. By \cref{thm:tree has at least one leaf}, there is a leaf $v$. Let $u$ be the unique neighbor of $v$. Then we can remove the edge between $u$ and $v$, and remove the vertex $v$ to obtain a new graph $G'=(V',E')$. It is easy to see that $G'$ is still a tree, and $|V'|=n-1$. By the induction hypothesis, we have $|E'|=|V'|-1=n-2$. Since we removed one edge to get from $G$ to $G'$, we have $|E|=|E'|+1=n-1=|V|-1$.
 \end{proof}
