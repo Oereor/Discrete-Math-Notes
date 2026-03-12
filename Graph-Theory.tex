@@ -292,3 +292,25 @@ We have the following theorem that characterizes trees in terms of the number of
     
     Assume the statement holds for any tree with less than $n$ vertices, where $n\geq 2$. Now we consider a tree $G$ with $n$ vertices. By \cref{thm:tree has at least one leaf}, there is a leaf $v$. Let $u$ be the unique neighbor of $v$. Then we can remove the edge between $u$ and $v$, and remove the vertex $v$ to obtain a new graph $G'=(V',E')$. It is easy to see that $G'$ is still a tree, and $|V'|=n-1$. By the induction hypothesis, we have $|E'|=|V'|-1=n-2$. Since we removed one edge to get from $G$ to $G'$, we have $|E|=|E'|+1=n-1=|V|-1$.
 \end{proof}
+
+In fact, the converse of \cref{thm:key property of trees} also holds, which gives us another characterization of trees.
+
+\begin{theorem}
+    An undirected graph with no simple circuit is a tree if adding an arbitrary edge generates a simple circuit in the new graph; a connected undirected graph is a tree if removing any edge makes the new graph disconnected.
+\end{theorem}
+
+\begin{proof}
+    Assume $G=(V,E)$ is an undirected graph with no simple circuit, and for any $u,v\in V$, if we add an edge between $u$ and $v$, denoted $e_0$, then there is a simple circuit in the new graph. We wish to show that $u$ and $v$ are connected. Since $G$ contains no simple circuit, the simple circuit in the new graph must contain $e_0$. Removing $e_0$ from this circuit, we get a path from $u$ to $v$ in $G$. Hence $G$ is connected, and thus a tree.
+
+    Next we assume $G=(V,E)$ is a connected undirected graph, and if we remove any edge in $G$, the new graph becomes disconnected. To prove that $G$ is a tree, it suffices to show that $G$ does not contain any simple circuit. If not so, assume $e_1,\dots,e_n$ is a simple circuit in $G$, passing through $v_0,v_1,\dots,v_n=v_0$. Then we can remove the edge $e_1$ to obtain a new graph. Since there is still a path from $v_0$ to $v_1$ in the new graph, it is still connected, which is a contradiction. 
+\end{proof}
+
+To summarize, the following statements are equivalent for an undirected graph $G=(V,E)$:
+\begin{itemize}
+    \item $G$ is a tree, i.e. $G$ is connected but contains no simple circuits.
+    \item $G$ is connected, and $|E|=|V|-1$.
+    \item $G$ contains no simple circuits and $|E| = |V|-1$.
+    \item $G$ is connected, but every edge in $E$ is a cut edge.
+    \item $G$ contains no simple circuits, but adding any edge to $G$ generates a simple circuit.
+    \item There is a unique simple path between any two vertices in $G$.
+\end{itemize}
