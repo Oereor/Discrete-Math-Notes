@@ -1,8 +1,9 @@
-# Notes for Discrete Mathematics course
+# SJTU CS2501H [Discrete Mathematics (H)] Spring 2026
 
-This repository stors reorganized notes of SJTU CS2501H course, Discrete Mathematics (H). Most of the notes are taken down at Prof. Qinxiang Cao's class and errors can occur due to limited time of live lecture. 
+This repository stores reorganized notes the discrete math course that I'm currently taking. Most of the notes are taken down at Prof. Cao's class and errors can occur due to limited time of live lecture. I will try my best to refine them after class.
+
 You are welcome to initiate pull requests for improvements on the notes. 
 
-Originally Prof. Cao's notes were written in English. I translated them into Chinese and the translated version can be found in `zh-CN` folder. 
+Originally Prof. Cao's notes were written in English. A translated version can be found in `zh-CN` folder. 
 
 The latest lecture was on 2026-03-11. Next lecture: 2026-03-16. 
