@@ -6,4 +6,4 @@ You are welcome to initiate pull requests for improvements on the notes.
 
 Originally Prof. Cao's notes were written in English. A translated version can be found in `zh-CN` folder. 
 
-The latest lecture was on 2026-03-11. Next lecture: 2026-03-16. 
+The latest lecture was on 2026-03-16. Next lecture: 2026-03-23. 

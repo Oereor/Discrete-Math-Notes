@@ -306,11 +306,72 @@ In fact, the converse of \cref{thm:key property of trees} also holds, which give
 \end{proof}
 
 To summarize, the following statements are equivalent for an undirected graph $G=(V,E)$:
-\begin{itemize}
+\begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
     \item $G$ is a tree, i.e. $G$ is connected but contains no simple circuits.
     \item $G$ is connected, and $|E|=|V|-1$.
     \item $G$ contains no simple circuits and $|E| = |V|-1$.
     \item $G$ is connected, but every edge in $E$ is a cut edge.
     \item $G$ contains no simple circuits, but adding any edge to $G$ generates a simple circuit.
     \item There is a unique simple path between any two vertices in $G$.
-\end{itemize}
+\end{enumerate}
+
+We now discuss a special type of trees known as spanning trees. 
+
+\begin{definition}[Spanning Tree]
+    A \emph{spanning tree} of an undirected graph $G=(V,E)$ is a subgraph of $G$ that is a tree and contains all vertices in $V$.
+\end{definition}
+
+\begin{theorem}
+    If $G$ is an undirected graph, then $G$ has a spanning tree if and only if $G$ is connected.
+\end{theorem}
+
+\begin{proof}
+    If $G$ has a spanning tree, then $G$ is connected since the spanning tree is connected. 
+
+    Conversely, if $G$ is connected, we can construct a spanning tree by starting with an empty graph and adding edges one by one. We can add an edge if and only if it does not create a simple circuit in the new graph. Since $G$ is connected, we can keep adding edges until all vertices are connected. The resulting graph is a spanning tree of $G$.
+\end{proof}
+
+In applicative scenarios, we often care more about the spanning tree with some optimality, such as the ``shortest'' one. This leads to the concept of minimum spanning tree, which is defined in a weighted graph. 
+
+\begin{definition}[Weighted Undirected Graph]
+    A \emph{weighted undirected graph} is an undirected graph $G=(V,E)$ together with a weight function $w\colon E\to\mathbb{R}$ that assigns to each edge a real number.
+\end{definition}
+
+\begin{definition}[Minimum Spanning Tree]
+    Suppose $G=(V,E)$ is a connected weighted graph. A \emph{minimum spanning tree} of $G$ is a spanning tree $T$ of $G$ such that the total weight of edges in $T$ is the minimum among all spanning trees of $G$. In symbols, if $T'=(V,E')$ is any spanning tree of $G$, then \[\sum_{e\in E}w(e)\leq \sum_{e\in E'}w(e).\]
+\end{definition}
+
+There are two well-known algorithms for finding a minimum spanning tree, Prim's and Kruskal's. 
+
+\begin{theorem}[Prim's Algorithm]
+    A minimum spanning tree of $G=(V,E)$ can be constructed by following the steps below:
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item Choose the initial tree $T_0=(V_0,E_0)$ as an arbitrary singleton vertex with no edge.
+        \item Construct $T_{n+1}$ from $T_n$ by adding an edge $e$ with the minimum weight among all remaining edges $e'$ satisfying that $T_n$ added with $e'$ is still a tree.
+        \item Finally the graph $T_{|V|-1}$ is a minimum spanning tree of $G$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    We first show that $T_{|V|-1}$ is a spanning tree of $G$. Since we add edges one by one, $T_{|V|-1}$ is a tree. Moreover, since we keep adding edges until all vertices are connected, $T_{|V|-1}$ contains all vertices in $V$. Hence $T_{|V|-1}$ is a spanning tree of $G$.
+
+    We first prove a proposition: For any $0\leq n\leq |V|-1$, there exist a minimum spanning tree $T^*$ of $G$ such that $T_n$ is a subgraph of $T^*$. We prove this proposition by induction on $n$.
+
+    If $n=0$, then $T_0$ is a singleton vertex, which is a subgraph of any spanning tree of $G$.
+
+    Assume the proposition holds for $n\geq 0$. Now we consider $n+1$. By the induction hypothesis, there is a $T^*$ such that $T_n$ is a subgraph of $T^*$. If $e$ is an edge in $T^*$, then we are done. 
+    Otherwise, since $T^*$ is a spanning tree, there is a path in $T^*$ connecting the endpoints of $e$. This path must contain an edge $e'$ that is not in $T_n$, since otherwise adding $e$ to $T_n$ will create a simple circuit, which contradicts the definition of $e$. Now we can replace $e'$ with $e$ to obtain a new spanning tree. Since Prim's algorithm picked $e$, we know that $w(e)\leq w(e')$, hence this new spanning tree is also a minimum spanning tree. Moreover, it contains $T_{n+1}$ as a subgraph. Hence the proposition holds for $n+1$.
+
+    Finally, by the proposition for $n=|V|-1$, there is a minimum spanning tree that contains $T_{|V|-1}$ as a subgraph. Since both of them are spanning trees, they must be the same graph. Hence $T_{|V|-1}$ is a minimum spanning tree of $G$.
+\end{proof}
+
+\begin{theorem}[Kruskal's Algorithm]
+    A minimum spanning tree of $G=(V,E)$ can be constructed by following the steps below:
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item Sort the edges in $E$ in non-decreasing order of their weights, and denote the sorted edges by $e_1,e_2,\dots,e_{m}$, where $m=|E|$. Initialize $T=\emptyset$.
+        \item For each $i=1,2,\dots,m$, add $e_i$ to $T$ if doing so does not create a simple circuit in $T$.
+        \item Stop when there are $|V|-1$ edges in $T$. The graph $T$ is then a minimum spanning tree of $G$.
+    \end{enumerate}
+\end{theorem}
+
+Proof of Kruskal's algorithm is very similar to that of Prim's, so we will not enter a detailed discussion here.
