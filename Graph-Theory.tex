@@ -77,7 +77,6 @@ The relationship between in-degrees and out-degrees is given by the following th
     If $G=(V,E)$ is a finite directed graph, then \[\sum_{v\in V}\deg^-(v)=\sum_{v\in V}\deg^+(v)=|E|.\]
 \end{theorem}
 
-\section{Paths and Circuits}
 \begin{definition}[Path]
     Suppose $G=(V,E)$ is an undirected graph. A \emph{path} of length $n\ (n\geq 0)$ from $u$ to $v$ is a finite sequence of edges $e_1,e_2,\dots,e_n$ such that there exists a sequence of vertices $v_0,v_1,\dots,v_n$ with $v_0=u$, $v_n=v$, and for each $i=1,2,\dots,n$, $v_{i-1}$ and $v_i$ are the endpoints of $e_i$.
 
@@ -343,14 +342,14 @@ In applicative scenarios, we often care more about the spanning tree with some o
 
 There are two well-known algorithms for finding a minimum spanning tree, Prim's and Kruskal's. 
 
-\begin{theorem}[Prim's Algorithm]
+\begin{algorithm}[Prim's Algorithm]
     A minimum spanning tree of $G=(V,E)$ can be constructed by following the steps below:
     \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
         \item Choose the initial tree $T_0=(V_0,E_0)$ as an arbitrary singleton vertex with no edge.
         \item Construct $T_{n+1}$ from $T_n$ by adding an edge $e$ with the minimum weight among all remaining edges $e'$ satisfying that $T_n$ added with $e'$ is still a tree.
         \item Finally the graph $T_{|V|-1}$ is a minimum spanning tree of $G$.
     \end{enumerate}
-\end{theorem}
+\end{algorithm}
 
 \begin{proof}
     We first show that $T_{|V|-1}$ is a spanning tree of $G$. Since we add edges one by one, $T_{|V|-1}$ is a tree. Moreover, since we keep adding edges until all vertices are connected, $T_{|V|-1}$ contains all vertices in $V$. Hence $T_{|V|-1}$ is a spanning tree of $G$.
@@ -365,13 +364,145 @@ There are two well-known algorithms for finding a minimum spanning tree, Prim's 
     Finally, by the proposition for $n=|V|-1$, there is a minimum spanning tree that contains $T_{|V|-1}$ as a subgraph. Since both of them are spanning trees, they must be the same graph. Hence $T_{|V|-1}$ is a minimum spanning tree of $G$.
 \end{proof}
 
-\begin{theorem}[Kruskal's Algorithm]
+\begin{algorithm}[Kruskal's Algorithm]
     A minimum spanning tree of $G=(V,E)$ can be constructed by following the steps below:
     \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
         \item Sort the edges in $E$ in non-decreasing order of their weights, and denote the sorted edges by $e_1,e_2,\dots,e_{m}$, where $m=|E|$. Initialize $T=\emptyset$.
         \item For each $i=1,2,\dots,m$, add $e_i$ to $T$ if doing so does not create a simple circuit in $T$.
         \item Stop when there are $|V|-1$ edges in $T$. The graph $T$ is then a minimum spanning tree of $G$.
     \end{enumerate}
-\end{theorem}
+\end{algorithm}
 
 Proof of Kruskal's algorithm is very similar to that of Prim's, so we will not enter a detailed discussion here.
+
+Previously we have been talking about unrooted trees. Now we takle a look at rooted trees, which are more similar to the trees we see in real life.
+
+\begin{definition}[Rooted Tree]
+    A \emph{rooted tree} is a tree with a designated vertex called the \emph{root}.
+\end{definition}
+
+Note that rooted trees need not be directed. Conventinally we put the root at the top of the tree, and draw the edges downwards when drawing a rooted tree. 
+
+\begin{definition}
+    In a rooted tree with root $r$, define 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item the \emph{level} of a vertex $v$ as the length of the unique simple path from $r$ to $v$;
+        \item the \emph{height} of the tree as the maximum level of all vertices in the tree.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    If $G=(V,E)$ is a rooted tree with root $r$, the \emph{parent} of a vertex $v\neq r$ is the unique vertex $u$ such that $\{u,v\}\in E$ and this edge appears in the unique path from $r$ to $v$. Conversely, $v$ is called a \emph{child} of $u$. 
+\end{definition}
+
+The family hierarchy in a rooted tree is quite similar to that in real life, as described by the following definitions.
+
+\begin{definition}
+    In a rooted tree $G=(V,E)$ with root $r$, 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item vertices $u,v$ are \emph{siblings} if they have the same parent;
+        \item the \emph{ancestors} of a vertex $v\neq r$ are the vertices on the simple path from $r$ to $v$, excluding $v$ but including $r$; the \emph{descendants} of $v$ are all vertices that have $v$ as an ancestor.
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    In a rooted tree with root $r$, if $v$ is an ancestor of $u$ and $w$ is an ancestor of $v$, then $w$ is also an ancestor of $u$.
+\end{theorem}
+
+In other words, the ancestor relationship is transitive.
+
+\begin{proof}
+    Since $v$ is an ancestor of $u$, there is a simple path from $r$ to $u$ that passes through $v$. Since $w$ is an ancestor of $v$, there is a simple path from $r$ to $v$ that passes through $w$. Concatenating these two paths yields a simple path from $r$ to $u$ that passes through $w$. Hence $w$ is an ancestor of $u$.
+\end{proof}
+
+The similar transitive property of descendants (i.e., descendants of descendants are still descendants) follows directly from the definition.
+
+\begin{lemma}\label{lem:relation between ancestor and parent}
+    In a rooted tree, if $u$ is the parent of $v$ and $u=x_n, x_{n-1}, \dots, x_0=r$ is the simple path from $u$ to the root $r$, then $v, u=x_n, x_{n-1}, \dots, x_0=r$ is also a simple path. 
+\end{lemma}
+
+\begin{proof}
+    Suppose $v=y_m, y_{m-1}, \dots, y_0=r$ is the simple path from $v$ to the root $r$. Then by definition $u=y_{m-1}$. Since in a tree the simple path between any two vertices is unique, we have $n=m-1$, and $x_n=y_{m-1}=u$, $x_{n-1}=y_{m-2}, \dots, x_0=y_0=r$. Hence $v, u=x_n, x_{n-1}, \dots, x_0=r$ is a simple path.
+\end{proof}
+
+\begin{theorem}
+    In a rooted tree, $u$ is an ancestor of $v$ if and only if there is a sequence of vertices $v=x_n, x_{n-1}, \dots, x_0=u$ such that for each $i=1,2,\dots,n$, $x_{i-1}$ is the parent of $x_i$.
+\end{theorem}
+
+\begin{proof}
+    If $u$ is an ancestor of $v$, suppose the simple path from $v$ to the root $r$ is $v=y_m, y_{m-1}, \dots, y_0=r$. Then there is some $k$ such that $y_k=u$. We can then take $x_n=v, x_{n-1}=y_{m-1}, \dots, x_0=y_k=u$ to get the desired sequence of vertices.
+
+    Conversely, if there is a sequence of vertices $v=x_n, x_{n-1}, \dots, x_0=u$ such that for each $i=1,2,\dots,n$, $x_{i-1}$ is the parent of $x_i$, we can denote the simple path from $u$ to $r$ as $u=z_k, z_{k-1}, \dots, z_0=r$. Then by \cref{lem:relation between ancestor and parent}, $v, x_{n-1}, \dots, u, z_{k-1}, \dots, z_0=r$ is also a simple path. Hence $u$ is an ancestor of $v$.
+\end{proof}
+
+\begin{lemma}
+    In a rooted tree, if $u$ is an ancestor of $v$, then all vertices on the simple path from $u$ to $v$ are either $u$ itself or descendants of $u$.
+\end{lemma}
+
+\begin{proof}
+    Suppose the simple path from $v$ to the root $r$ is $v=y_m, y_{m-1}, \dots, y_0=r$. Since $u$ is an ancestor of $v$, there is some $k$ such that $y_k=u$. Then the simple path from $u$ to $v$ is $u=y_k, y_{k+1}, \dots, y_m=v$. It is easy to see that all vertices in this path except $u$ descendants of $u$.
+\end{proof}
+
+\begin{definition}[Leaf and Internal Vertex]
+    In a rooted tree, a vertex is a \emph{leaf} if it has no child; otherwise, it is an \emph{internal vertex}.
+\end{definition}
+
+\begin{definition}[Subtree]
+    The \emph{subtree} of a rooted tree at a vertex $v$ is the subgraph induced by the set of descendants of $v$ together with $v$ itself.
+\end{definition}
+
+Note that despite the name ``subtree'', the definition does not require the subtree to be a tree. We now prove this fact.
+
+\begin{theorem}
+    The subtree of a rooted tree at any vertex is still a tree.
+\end{theorem}
+
+\begin{proof}
+    The fact that there is no simple circuit is trivial. To show that the subtree is connected, we need to show that any two vertices in the subtree are connected. It suffices to show that any vertex in the subtree is connected to $v$, and this follows from the definition of descendants.
+\end{proof}
+
+\begin{theorem}
+    In a rooted tree, if $v_1$ and $v_2$ are both descendants of $u$, then all vertices on the simple path from $v_1$ to $v_2$ are either $u$ itself or descendants of $u$.
+\end{theorem}
+
+\begin{proof}
+    Since $v_1$ and $v_2$ are descendants of $u$, they are in the subtree at $u$. Hence the simple path from $v_1$ to $v_2$ is also in the subtree at $u$. Then by definition all vertices in this path are descendants of $u$, except possibly $u$ itself.
+\end{proof}
+
+\begin{definition}[$m$-ary Tree]
+    If $G$ is a rooted tree, we say that 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item $G$ is \emph{$m$-ary} if every internal vertex has at most $m$ children;
+        \item $G$ is \emph{binary} if it is $2$-ary.
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    An $m$-ary tree of height $h$ has at most $m^h$ leaves. 
+\end{theorem}
+
+\begin{proof}
+    We prove by induction on $h$. If $h=0$, then the tree has only one vertex, which is a leaf, so the statement holds. 
+
+    Assume the statement holds for $h\geq 0$. Now we consider an $m$-ary tree of height $h+1$. If the height is $0$, then there is only one leaf, and the statement holds. Otherwise, the root has at least one child, and all children of the root are internal vertices since the height is greater than $0$. Hence each child of the root is the root of an $m$-ary tree of height at most $h$. By the induction hypothesis, each child of the root has at most $m^h$ leaves. Since there are at most $m$ children of the root, there are at most $m\cdot m^h=m^{h+1}$ leaves in total.
+\end{proof}
+
+\section{Traversal of Graphs}
+\begin{algorithm}[Depth-First Search, DFS]
+    If $G$ is a connected graph, then we can traverse all vertices in $G$ by following the steps below:
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item Start with an arbitrary vertex $v$.
+        \item Continuously augment a simple path until no edge is augmentable. 
+        \item Trace back to the deepest vertex from which some edge is augmentable, and repeat step \textup{(b)}.
+    \end{enumerate}
+\end{algorithm}
+
+\begin{definition}
+    We say the \emph{$k$-th move} from vertex $u$ to vertex $v$ through edge $e$ as a \emph{forward step} if $v$ has not been visited before the $k$-th move; we say it is a \emph{backward step} if $v$ has been visited before the $k$-th move.
+
+    We sometimes also say \emph{$k$-th forward move} or \emph{$k$-th backward move} for short.
+\end{definition}
+
+\begin{definition}
+    In a DFS process, if there is a forward move through $e$, then $e$ is called a \emph{tree edge}. Otherwise, $e$ is called a \emph{back edge}.
+\end{definition}
