@@ -374,3 +374,135 @@ Prim 算法和 Kruskal 算法是两种经典的求解最小生成树问题的算
 \end{algorithm}
 
 Kruskal 算法的证明与 Prim 算法的证明非常相似, 这里不再展开详细讨论.
+
+先前讨论的都是无根树. 现在我们来讨论有根树, 它的结构更类似于我们在现实生活中看到的树.
+
+\begin{definition}[有根树]
+    在树中指定一个顶点为\textbf{根}, 这棵树就成为\textbf{有根树}.
+\end{definition}
+
+注意: 有根树并不一定是有向图. 在绘制有根树时, 通常将根绘制于树的顶部, 并向下绘制各条边. 
+
+\begin{definition}
+    在以 $r$ 为根的有根树中, 定义
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item 顶点 $v$ 的\textbf{层级}为从 $r$ 到 $v$ 的唯一简单路径的长度;
+        \item 树的\textbf{高度}为树中所有顶点的层级的最大值.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    设 $G=(V,E)$ 是以 $r$ 为根的有根树, 则对于 $v\neq r$, $v$ 的\textbf{父节点}是唯一的一个顶点 $u$, 满足 $\{u,v\}\in E$ 且这条边出现在从 $r$ 到 $v$ 的唯一简单路径上. 反过来, $v$ 称为 $u$ 的\textbf{子节点}.
+\end{definition}
+
+有根树中的层次结构与我们在现实生活中看到的家族谱系非常相似, 下面的定义描述了这种相似性.
+
+\begin{definition}
+    在以 $r$ 为根的有根树 $G=(V,E)$ 中, 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item 如果两个顶点 $u,v$ 有相同的父节点, 则称它们是\textbf{兄弟节点};
+        \item 对于 $v\neq r$, $v$ 的\textbf{祖先节点}是指从 $r$ 到 $v$ 的唯一简单路径上的所有顶点, 包括 $r$, 但是不包括 $v$; $v$ 的\textbf{子孙节点}是指所有以 $v$ 为一个祖先节点的顶点.
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    在以 $r$ 为根的有根树中, 如果 $v$ 是 $u$ 的一个祖先节点, $w$ 是 $v$ 的一个祖先节点, 则 $w$ 也是 $u$ 的一个祖先节点.
+\end{theorem}
+
+换句话说, 祖先关系具有传递性.
+
+\begin{proof}
+    由于 $v$ 是 $u$ 的一个祖先节点, 从 $r$ 到 $u$ 的唯一简单路径经过 $v$. 由于 $w$ 是 $v$ 的一个祖先节点, 从 $r$ 到 $v$ 的唯一简单路径经过 $w$. 将这两条路径相连, 就得到了从 $r$ 到 $u$ 的一条简单路径, 且这条路径经过 $w$. 因此 $w$ 是 $u$ 的一个祖先节点.
+\end{proof}
+
+子孙关系也有类似的传递性 (即子孙的子孙仍然是子孙), 这可以直接从定义中得出.
+
+\begin{lemma}\label{lem:relation between ancestor and parent}
+    在有根树中, 若 $u$ 是 $v$ 的父节点, 且 $u=x_n, x_{n-1}, \dots, x_0=r$ 是从 $u$ 到根 $r$ 的简单路径, 则 $v, u=x_n, x_{n-1}, \dots, x_0=r$ 也是一条简单路径.
+\end{lemma}
+
+\begin{proof}
+    设 $v=y_m, y_{m-1}, \dots, y_0=r$ 是从 $v$ 到 $r$ 的简单路径, 则据定义有 $u=y_{m-1}$. 由于树中任意两顶点之间的简单路径是唯一的, 必定有 $n=m-1$, 且 $x_n=y_{m-1}=u$, $x_{n-1}=y_{m-2}, \dots, x_0=y_0=r$. 因此 $v, u=x_n, x_{n-1}, \dots, x_0=r$ 是一条简单路径.
+\end{proof}
+
+\begin{theorem}
+    在有根树中, $u$ 是 $v$ 的一个祖先节点当且仅当存在一列顶点 $v=x_n, x_{n-1}, \dots, x_0=u$, 使得对任意 $i=1,2,\dots,n$, $x_{i-1}$ 是 $x_i$ 的父节点.
+\end{theorem}
+
+\begin{proof}
+    若 $u$ 是 $v$ 的祖先节点, 设从 $v$ 到根 $r$ 的简单路径为 $v=y_m, y_{m-1}, \dots, y_0=r$, 则存在 $k$ 使得 $y_k=u$. 取 $x_n=v, x_{n-1}=y_{m-1}, \dots, x_0=y_k=u$即得所求的顶点列.
+
+    反过来, 如果存在一列顶点 $v=x_n, x_{n-1}, \dots, x_0=u$ 使得对任意 $i=1,2,\dots,n$, $x_{i-1}$ 是 $x_i$ 的父节点, 记从 $u$ 到根 $r$ 的简单路径为 $u=z_k, z_{k-1}, \dots, z_0=r$, 则由\cref{lem:relation between ancestor and parent} 可知 $v, x_{n-1}, \dots, u, z_{k-1}, \dots, z_0=r$ 也是一条简单路径. 因此 $u$ 是 $v$ 的一个祖先节点.
+\end{proof}
+
+\begin{lemma}
+    在有根树中, 如果 $u$ 是 $v$ 的一个祖先节点, 则从 $u$ 到 $v$ 的简单路径上的顶点要么是 $u$, 要么是 $u$ 的子孙节点.
+\end{lemma}
+
+\begin{proof}
+    设从 $v$ 到根 $r$ 的简单路径为 $v=y_m, y_{m-1}, \dots, y_0=r$. 由于 $u$ 是 $v$ 的一个祖先节点, 存在 $k$ 使得 $y_k=u$. 那么从 $u$ 到 $v$ 的简单路径就是 $u=y_k, y_{k+1}, \dots, y_m=v$. 显然这条路径上除了 $u$ 以外的所有顶点都是 $u$ 的子孙节点.
+\end{proof}
+
+\begin{definition}[叶子和内部顶点]
+    在有根树中, 没有子节点的顶点称为\textbf{叶子}; 否则称为\textbf{内部顶点}.
+\end{definition}
+
+\begin{definition}[子树]
+    一个有根树中, 顶点 $v$ 处的\textbf{子树}是指由 $v$ 及其所有子孙节点导出的子图.
+\end{definition}
+
+注意: 尽管名为 ``子树'', 但定义中并没有明确规定子树必须是一棵树. 下面我们证明子树确实是树.
+
+\begin{theorem}
+    有根树中任意一个顶点处的子树仍然是一棵树.
+\end{theorem}
+
+\begin{proof}
+    子树中显然不含有简单回路, 因此我们只需要证明子树是连通的. 那么只需证明子树中的任意顶点都与 $v$ 连通. 这直接由子树的定义即可得到, 因为子树中的每个顶点都是 $v$ 的一个子孙节点.
+\end{proof}
+
+\begin{theorem}
+    在有根树中, 如果 $v_1$ 和 $v_2$ 都是 $u$ 的子孙节点, 则从 $v_1$ 到 $v_2$ 的简单路径上的顶点要么是 $u$, 要么是 $u$ 的子孙节点.
+\end{theorem}
+
+\begin{proof}
+    由于 $v_1$ 和 $v_2$ 都是 $u$ 的子孙节点, 它们都在 $u$ 处的子树中. 因此从 $v_1$ 到 $v_2$ 的简单路径也在 $u$ 的子树中. 根据定义, 这条路径上的所有顶点都是 $u$ 的子孙节点, 除了 $u$ 自身.
+\end{proof}
+
+\begin{definition}[$m$ 叉树]
+    设 $G$ 是一棵有根树,
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item 如果 $G$ 中每个内部顶点的子节点数都不超过 $m$, 就称 $G$ 是\textbf{$m$ 叉树};
+        \item 如果 $G$ 是 $2$ 叉树, 就称其为\textbf{二叉树}.
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    高度为 $h$ 的 $m$ 叉树至多有 $m^h$ 个叶子.
+\end{theorem}
+
+\begin{proof}
+    我们对 $h$ 用数学归纳法. 若 $h=0$, 则树中只有一个顶点, 也是一个叶子, 因此命题成立.
+
+    设命题对 $h\geq 0$ 成立, 现在考虑一棵高度为 $h+1$ 的 $m$ 叉树. 树的根至少有一个子节点, 且每个子节点都是一棵高度不超过 $h$ 的 $m$ 叉树的根. 根据归纳假设, 每个子节点处的子树中至多有 $m^h$ 个叶子. 由于根的子节点数不超过 $m$, 因此树中总共至多有 $m\cdot m^h=m^{h+1}$ 个叶子.
+\end{proof}
+
+\section{图的遍历}
+\begin{algorithm}[深度优先搜索, DFS]
+    若 $G$ 是一个连通图, 我们可以通过以下步骤遍历 $G$ 中的所有顶点:
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item 从 $G$ 中任意选择一个顶点 $v$ 作为起点.
+        \item 不断地将一条简单路径进行扩展, 直到没有边可以扩展为止.
+        \item 回溯到最深的一个顶点, 使得从该顶点出发仍然有边可以扩展. 重复步骤 \textup{(b)}.
+    \end{enumerate}
+\end{algorithm}
+
+\begin{definition}
+    如果在第 $k$ 步中, 从顶点 $u$ 通过边 $e$ 移动到顶点 $v$, 且在第 $k$ 步之前没有访问过 $v$, 则称这是一次\textbf{前向移动}; 如果在第 $k$ 步之前访问过 $v$, 则称这是一次\textbf{后向移动}.
+
+    有时, 我们也会简称为\textbf{第 $k$ 次前向移动}或者\textbf{第 $k$ 次后向移动}.
+\end{definition}
+
+\begin{definition}
+    在 DFS 中, 如果存在一次通过边 $e$ 的前向移动, 则称 $e$ 是一条\textbf{树边}; 否则, 称 $e$ 是一条\textbf{回边}.
+\end{definition}

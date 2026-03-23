@@ -375,7 +375,7 @@ There are two well-known algorithms for finding a minimum spanning tree, Prim's 
 
 Proof of Kruskal's algorithm is very similar to that of Prim's, so we will not enter a detailed discussion here.
 
-Previously we have been talking about unrooted trees. Now we takle a look at rooted trees, which are more similar to the trees we see in real life.
+Previously we have been talking about unrooted trees. Now we take a look at rooted trees, which are more similar to the trees we see in real life.
 
 \begin{definition}[Rooted Tree]
     A \emph{rooted tree} is a tree with a designated vertex called the \emph{root}.
@@ -484,7 +484,7 @@ Note that despite the name ``subtree'', the definition does not require the subt
 \begin{proof}
     We prove by induction on $h$. If $h=0$, then the tree has only one vertex, which is a leaf, so the statement holds. 
 
-    Assume the statement holds for $h\geq 0$. Now we consider an $m$-ary tree of height $h+1$. If the height is $0$, then there is only one leaf, and the statement holds. Otherwise, the root has at least one child, and all children of the root are internal vertices since the height is greater than $0$. Hence each child of the root is the root of an $m$-ary tree of height at most $h$. By the induction hypothesis, each child of the root has at most $m^h$ leaves. Since there are at most $m$ children of the root, there are at most $m\cdot m^h=m^{h+1}$ leaves in total.
+    Assume the statement holds for $h\geq 0$. Now we consider an $m$-ary tree of height $h+1$. The root has at least one child, and each child of the root is the root of an $m$-ary tree of height at most $h$. By the induction hypothesis, each child of the root has at most $m^h$ leaves. Since there are at most $m$ children of the root, there are at most $m\cdot m^h=m^{h+1}$ leaves in total.
 \end{proof}
 
 \section{Traversal of Graphs}
@@ -498,7 +498,7 @@ Note that despite the name ``subtree'', the definition does not require the subt
 \end{algorithm}
 
 \begin{definition}
-    We say the \emph{$k$-th move} from vertex $u$ to vertex $v$ through edge $e$ as a \emph{forward step} if $v$ has not been visited before the $k$-th move; we say it is a \emph{backward step} if $v$ has been visited before the $k$-th move.
+    We say the \emph{$k$-th move} from vertex $u$ to vertex $v$ through edge $e$ is a \emph{forward step} if $v$ has not been visited before the $k$-th move; we say it is a \emph{backward step} if $v$ has been visited before the $k$-th move.
 
     We sometimes also say \emph{$k$-th forward move} or \emph{$k$-th backward move} for short.
 \end{definition}
