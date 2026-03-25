@@ -8,6 +8,7 @@
 \usepackage{graphicx} 		
 \usepackage{hyperref} 		
 \usepackage{amsmath}	
+\usepackage[noEnd=false]{algpseudocodex}
 \usepackage{booktabs}
 \usepackage{amsfonts}
 \usepackage{amsthm}
@@ -78,10 +79,10 @@
 \aliascntresetthe{definition}
 \crefname{definition}{Definition}{Definitions}
 
-\newaliascnt{algorithm}{theorem}
-\newtheorem{algorithm}[algorithm]{\textbf{Algorithm}}
-\aliascntresetthe{algorithm}
-\crefname{algorithm}{Algorithm}{Algorithms}
+\newaliascnt{algo}{theorem}
+\newtheorem{algo}[algo]{\textbf{Algorithm}}
+\aliascntresetthe{algo}
+\crefname{algo}{Algorithm}{Algorithms}
 
 \newaliascnt{exercise}{theorem}
 \newtheorem{exercise}[exercise]{\textbf{Exercise}}

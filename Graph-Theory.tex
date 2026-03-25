@@ -342,14 +342,14 @@ In applicative scenarios, we often care more about the spanning tree with some o
 
 There are two well-known algorithms for finding a minimum spanning tree, Prim's and Kruskal's. 
 
-\begin{algorithm}[Prim's Algorithm]
+\begin{algo}[Prim's Algorithm]
     A minimum spanning tree of $G=(V,E)$ can be constructed by following the steps below:
     \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
         \item Choose the initial tree $T_0=(V_0,E_0)$ as an arbitrary singleton vertex with no edge.
         \item Construct $T_{n+1}$ from $T_n$ by adding an edge $e$ with the minimum weight among all remaining edges $e'$ satisfying that $T_n$ added with $e'$ is still a tree.
         \item Finally the graph $T_{|V|-1}$ is a minimum spanning tree of $G$.
     \end{enumerate}
-\end{algorithm}
+\end{algo}
 
 \begin{proof}
     We first show that $T_{|V|-1}$ is a spanning tree of $G$. Since we add edges one by one, $T_{|V|-1}$ is a tree. Moreover, since we keep adding edges until all vertices are connected, $T_{|V|-1}$ contains all vertices in $V$. Hence $T_{|V|-1}$ is a spanning tree of $G$.
@@ -364,14 +364,14 @@ There are two well-known algorithms for finding a minimum spanning tree, Prim's 
     Finally, by the proposition for $n=|V|-1$, there is a minimum spanning tree that contains $T_{|V|-1}$ as a subgraph. Since both of them are spanning trees, they must be the same graph. Hence $T_{|V|-1}$ is a minimum spanning tree of $G$.
 \end{proof}
 
-\begin{algorithm}[Kruskal's Algorithm]
+\begin{algo}[Kruskal's Algorithm]
     A minimum spanning tree of $G=(V,E)$ can be constructed by following the steps below:
     \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
         \item Sort the edges in $E$ in non-decreasing order of their weights, and denote the sorted edges by $e_1,e_2,\dots,e_{m}$, where $m=|E|$. Initialize $T=\emptyset$.
         \item For each $i=1,2,\dots,m$, add $e_i$ to $T$ if doing so does not create a simple circuit in $T$.
         \item Stop when there are $|V|-1$ edges in $T$. The graph $T$ is then a minimum spanning tree of $G$.
     \end{enumerate}
-\end{algorithm}
+\end{algo}
 
 Proof of Kruskal's algorithm is very similar to that of Prim's, so we will not enter a detailed discussion here.
 
@@ -488,14 +488,14 @@ Note that despite the name ``subtree'', the definition does not require the subt
 \end{proof}
 
 \section{Traversal of Graphs}
-\begin{algorithm}[Depth-First Search, DFS]
+\begin{algo}[Depth-First Search, DFS]
     If $G$ is a connected graph, then we can traverse all vertices in $G$ by following the steps below:
     \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
         \item Start with an arbitrary vertex $v$.
         \item Continuously augment a simple path until no edge is augmentable. 
         \item Trace back to the deepest vertex from which some edge is augmentable, and repeat step \textup{(b)}.
     \end{enumerate}
-\end{algorithm}
+\end{algo}
 
 \begin{definition}
     We say the \emph{$k$-th move} from vertex $u$ to vertex $v$ through edge $e$ is a \emph{forward step} if $v$ has not been visited before the $k$-th move; we say it is a \emph{backward step} if $v$ has been visited before the $k$-th move.
@@ -555,9 +555,11 @@ Usually we treat the spanning tree as a rooted tree with the start vertex as the
 \end{lemma}
 
 \begin{proof}
-    We perform an induction over $k$. 
-
-    If $k=0$, the statement is trivial. Assume the statement holds for $k\geq 0$. Now we consider $k+1$. If the $(k+1)$-th step is a backward step, then $v_{k}$ is in category (c) instead of category (b), and the simple path from $v_0$ to $v_{k+1}$ is the same as that from $v_0$ to $v_k$. Hence the statement holds for $k+1$.
+    We perform an induction over $k$. If $k=0$, the statement is trivial. Assume the statement holds for $k\geq 0$. Now we consider $k+1$. 
+    
+    If the $(k+1)$-th step is a backward step, then the only difference is that the starting vertex of this step, i.e. $v_k$, is moved from category (b) to category (c). Moreover, since $v_{k+1}=v_i$ for some $i<k$, the simple path from $v_0$ to $v_{k+1}$ is just the simple path from $v_0$ to $v_i$, which satisfies the properties by the induction hypothesis. 
+    
+    If the $(k+1)$-th step is a forward step, then $v_{k+1}$ is added to category (b), and the simple path from $v_0$ to $v_{k+1}$ is just the simple path from $v_0$ to $v_k$ concatenated with the edge $e_{k+1}$. It is easy to see that this new path satisfies the properties. This completes the proof. 
 \end{proof}
 
 \begin{corollary}
@@ -575,3 +577,30 @@ Usually we treat the spanning tree as a rooted tree with the start vertex as the
 \begin{theorem}
     A back edge is always from a vertex to one of its ancestors, one of its descendants, or itself.
 \end{theorem}
+
+\begin{proof}
+    Consider an edge from $u$ to $v$. If one of them is the root, the statement is obviously true. Otherwise, consider the backward steps leaving $u$ and $v$ respectively. Without loss of generality, assume the backward step leaving $u$ is earlier. Then right at the time when we leave $u$, $v$ must have been visited (otherwise there should be a forward step instead of a backward one). Since a backward step from $v$ has not yet happened, $v$ must be $u$'s ancestor. 
+\end{proof}
+
+\begin{algo}[Tarjan's Algorithm for Finding Bridges]
+    \mbox{}
+
+    \begin{algorithmic}
+        \Procedure{Tarjan-Bridge}{$u,e_0$}
+            \State $time\gets time+1$
+            \State $dfn[u]\gets time$
+            \State $low[u]\gets time$
+            \For{each edge $e\neq e_0$ connecting $u$ and $v$}
+                \If{$dfn[v]$ is not initialized}
+                    \State \Call{Tarjan-Bridge}{$v,e$}
+                    \State $low[u]\gets \min\{low[u], low[v]\}$
+                    \If{$low[v]=dfn[v]$}
+                        \State $e$ is a bridge
+                    \EndIf
+                \Else
+                    \State $low[u]\gets \min\{low[u], dfn[v]\}$
+                \EndIf
+            \EndFor
+        \EndProcedure
+    \end{algorithmic}
+\end{algo}
