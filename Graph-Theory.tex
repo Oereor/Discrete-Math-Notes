@@ -121,7 +121,7 @@ The following theorem indicates that connectedness is an equivalence relation.
     If there is a path from $u$ to $v$ and a path from $v$ to $w$, we can concatenate these two paths to obtain a path from $u$ to $w$. In symbols: If $e_1,\dots,e_n$ is a path from $u$ to $v$, and $f_1,\dots,f_m$ is a path from $v$ to $w$, then $e_1,\dots,e_n,f_1,\dots,f_m$ is a path from $u$ to $w$. This proves (c).
 \end{proof}
 
-With the connectedness of vertices defined, we can define the connectedness of the whole graph.
+With connectedness of vertices defined, we can define connectedness of the whole graph.
 
 \begin{definition}[Connected Graph]
     An undirected graph $G=(V,E)$ is \emph{connected} if every pair of vertices in $V$ are connected. Otherwise, it is \emph{disconnected}.
@@ -159,7 +159,7 @@ We now discuss an important theorem regarding connected components.
     Moreover, if there is a connected subgraph $H$ that contains $G'$ as a proper subgraph, then there is a vertex in $H$ (so that it is connected to $v$) that is not in $G'$, which contradicts the definition of $W$. Hence $G'$ is a connected component of $G$.
 \end{proof}
 
-Now we turn to the connectedness of directed graphs. The situation is more complicated here, but we can still define a type of connectedness that is similar to the one in undirected graphs.
+Now we turn to connectivity of directed graphs. The situation is more complicated here, but we can still define a type of connectedness that is similar to the one in undirected graphs.
 
 \begin{definition}[Strongly Connected]
     Suppose $G=(V,E)$ is a directed graph. Two vertices $u,v\in V$ are \emph{strongly connected} if there is a path from $u$ to $v$ and a path from $v$ to $u$ in $G$.
@@ -177,7 +177,7 @@ It is easy to see that strongly connectedness is also an equivalence relation. T
 
 Basically what we did was to replace the term ``connected'' with ``strongly connected'' in \cref{thm:theorem about connected components}.
 
-The following theorem depicts the connectedness between strongly connected components. 
+The following theorem depicts connectivity between strongly connected components. 
 
 \begin{theorem}
     Suppose $G$ is a directed graph, $G'=(V',E')$ and $G''=(V'',E'')$ are two distinct strongly connected components of $G$. Then for any $u_1,u_2\in V'$ and any $v_1,v_2\in V''$, $v_1$ is reachable from $u_1$ if and only if $v_2$ is reachable from $u_2$.
@@ -500,9 +500,78 @@ Note that despite the name ``subtree'', the definition does not require the subt
 \begin{definition}
     We say the \emph{$k$-th move} from vertex $u$ to vertex $v$ through edge $e$ is a \emph{forward step} if $v$ has not been visited before the $k$-th move; we say it is a \emph{backward step} if $v$ has been visited before the $k$-th move.
 
+    More formally, assume the start vertex is $v_0$, and the $k$-th move is from $v_{k-1}$ to $v_k$ through edge $e_k$. 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item If there exists $e\in E$ and $w\in V$ such that $w\not\in\{v_0,\dots, v_{k-1}\}$ and $e$ connects $v_{k-1}$ and $w$, then the $k$-th move must be forward. Otherwise it is backward.
+        \item If the $k$-th move is a forward step, then $v_k\not\in\{v_0,\dots,v_{k-1}\}$.
+        \item If the $k$-th move is a backward step and $v_{k-1}=v_i$, where $0\leq i<k-1$ and the $i$-th move is forward, then $v_k=v_{i-1}$ and $e_k=e_i$.
+    \end{enumerate}
+
     We sometimes also say \emph{$k$-th forward move} or \emph{$k$-th backward move} for short.
 \end{definition}
 
 \begin{definition}
     In a DFS process, if there is a forward move through $e$, then $e$ is called a \emph{tree edge}. Otherwise, $e$ is called a \emph{back edge}.
 \end{definition}
+
+\begin{theorem}
+    All tree edges in a DFS of a connected undirected graph $G$ form a spanning tree of $G$.
+\end{theorem}
+
+This is where the name ``tree edge'' comes from. 
+
+\begin{proof}
+    First we prove that all vertices appear, by contradiction. If $v$ does not, then since $G$ is connected, there is a path from $v$ to some vertex $u$ that appears. Starting from $u$ and following this path, we will eventually reach $v$. That's a contradiction. 
+
+    Next, we prove that this subgraph is a tree. This can be done by induction. Put $V_k=\{v_0,\dots,v_k\}$ and $E_k=\{e_1,\dots,e_k\}$, and set $E_0=\emptyset$. We will show that the subgraph $G_k=(V_k,E_k)$ is a tree for each $k\geq 0$. 
+    
+    The base case is trivial. Now assume the statement holds for $k\geq 0$. If the $(k+1)$-th move is a backward step, then $G_{k+1}=G_k$, so the statement holds. Otherwise the $(k+1)$-th move is forward, and $G_{k+1}$ is obtained by adding a new vertex and a new edge to $G_k$. Since $e_{k+1}$ connects a vertex in $G_k$ to a vertex outside $G_k$, adding $e_{k+1}$ cannot create any simple circuit. Hence $G_{k+1}$ is still a tree. This establishes the inductive step and completes the proof.
+\end{proof}
+
+Usually we treat the spanning tree as a rooted tree with the start vertex as the root. 
+
+\begin{corollary}
+    A forward step is from a vertex to one of its children. 
+\end{corollary}
+
+\begin{lemma}
+    Suppose $G=(V,E)$ is a connected undirected graph and $u\in V$. Then every vertex $v\neq u$ appears as the terminal vertex of a forward step exactly once in a DFS process of $G$ starting from $u$.
+\end{lemma}
+
+\begin{lemma}
+    Suppose $G=(V,E)$ is a connected undirected graph and a DFS process of $G$ contains $s$ steps, with the $k$-th step from $v_{k-1}$ to $v_k$ through edge $e_k$. The for every $k\leq s$, the set of so-called ``visited vertices'' $\{v_0,\dots,v_k\}$ can be divided into the following catogories: 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item The starting vertex;
+        \item The vertices which appears as exactly one forward step's termination, and as no backward step's starting vertex in the first $k$ steps;
+        \item The vertices which appears as exactly one forward step's termination, and as exactly one backward step's starting vertex in the first $k$ steps. 
+    \end{enumerate}
+
+    Moreover, one simple path from $v_0$ to $v_k$ satisfies the following properties:
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item It contains only tree edges $e_{n_1},e_{n_2},\dots,e_{n_l}$, where $1\leq n_1<n_2<\dots<n_l\leq k$;
+        \item It passes through vertices $v_{n_1-1}, v_{n_1}, v_{n_2}, \dots, v_{n_l}$, where $v_{n_l}=v_k$ and $v_{n_{i-1}}=v_{{n_i}-1}$; 
+        \item The set $\{v_0, v_{n_1}, \dots, v_{n_l}\}$ is exactly the set of vertices in categories \textup{(a)} and \textup{(b)} above. 
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    We perform an induction over $k$. 
+
+    If $k=0$, the statement is trivial. Assume the statement holds for $k\geq 0$. Now we consider $k+1$. If the $(k+1)$-th step is a backward step, then $v_{k}$ is in category (c) instead of category (b), and the simple path from $v_0$ to $v_{k+1}$ is the same as that from $v_0$ to $v_k$. Hence the statement holds for $k+1$.
+\end{proof}
+
+\begin{corollary}
+    Suppose $G=(V,E)$ is a connected undirected graph and $u\in V$. Then every vertex $v\neq u$ appears as the starting vertex of a backward step exactly once in a DFS process of $G$ starting from $u$.
+\end{corollary}
+
+\begin{corollary}
+    Suppose $G=(V,E)$ is a connected undirected graph and $|V|=n$. Then a DFS process of $G$ contains exactly $n-1$ forward steps and $n-1$ backward steps.
+\end{corollary}
+
+\begin{corollary}
+    Suppose $G=(V,E)$ is a connected undirected graph and a DFS process of $G$ contains $s$ steps, with the $k$-th step from $v_{k-1}$ to $v_k$ through edge $e_k$. If $v_i=v_j=u$ and $i<j$, then $v_k$ is a descendant of $u$ for any $i<k<j$.
+\end{corollary}
+
+\begin{theorem}
+    A back edge is always from a vertex to one of its ancestors, one of its descendants, or itself.
+\end{theorem}
