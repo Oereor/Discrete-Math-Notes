@@ -1,0 +1,70 @@
+\chapter{Logic}
+\section{Logical Connectives and Quantifiers}
+\begin{definition}
+    If $p$ and $q$ are propositions, then
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item the \emph{conjunction} of $p$ and $q$, denoted by $p \wedge q$, is the proposition ``$p$ and $q$'', which is true if both $p$ and $q$ are true, and false otherwise.
+        \item the \emph{disjunction} of $p$ and $q$, denoted by $p \vee q$, is the proposition ``$p$ or $q$'', which is true if at least one of $p$ and $q$ is true, and false otherwise.
+        \item the \emph{negation} of $p$, denoted by $\neg p$, is the proposition ``not $p$'', which is true if $p$ is false, and false if $p$ is true.
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    Set $p=$ ``It is raining'' and $q=$ ``I have an umbrella''. Then $p \wedge q$ is the proposition ``It is raining and I have an umbrella'', $p \vee q$ is the proposition ``It is raining or I have an umbrella'', and $\neg p$ is the proposition ``It is not raining''.
+\end{example}
+
+\begin{definition}
+    We define two quantifiers as follows:
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item the \emph{universal quantifier} $\forall$ is used to denote ``for all'' or ``for every''.
+        \item the \emph{existential quantifier} $\exists$ is used to denote ``there exists'' or ``for some''.
+    \end{enumerate}
+\end{definition}
+
+We can combine the quantifiers with logical connectives to form more complex propositions. 
+
+\begin{example}
+    Set $E(t)=$ ``$t$ is even'' and $P(t)=$ ``$t$ is prime''. Then $\exists t\quad (E(t) \wedge P(t))$ is the proposition ``There exists a $t$ such that $t$ is even and $t$ is prime''.
+\end{example}
+
+\begin{definition}
+    The \emph{conditional statement} $p \rightarrow q$ is the proposition ``if $p$ then $q$'', which is false if $p$ is true and $q$ is false, and true otherwise.
+\end{definition}
+
+$p \rightarrow q$ can also be read as ``$p$ implies $q$'', hence also called an \emph{implication}. Usually it is used after the universal quantifier $\forall$. For example, $\forall t\quad (S(t) \rightarrow C(t))$ is the proposition ``For all $t$, if $S(t)$ then $C(t)$''. 
+
+Now that $\forall$ is associated with $\rightarrow$, what about $\exists$? In fact, $\exists$ is associated with $\wedge$. For example, $\exists t\quad (U(t) \wedge M(t))$ is the proposition ``There exists a $t$ such that $U(t)$ and $M(t)$''. If we set $U(t)=$ ``$t$ is a US student'' and $M(t)=$ ``$t$ has visited Mexico'', then $\exists t\quad (U(t) \wedge M(t))$ is the proposition ``There exists a US student who has visited Mexico''.
+
+We now consider some rather complex examples. 
+
+\begin{example}
+    The sentence in natural language ``For every student in SAI, a research mentor will be assigned to him or her'' can be translated into the following proposition:
+    \[\forall x\quad (S(x) \rightarrow \exists y\quad M(x, y))\]
+    where $S(t)=$ ``$t$ is a student in SAI'' and $M(t_1, t_2)=$ ``$t_2$ is a research mentor assigned to $t_1$''.
+
+    The sentence in natural language ``Even if there is only one student in SAI who does not study hard, he or she will get a very bad score'' can be translated into the following proposition:
+    \[\forall x\quad (S(x) \wedge \neg H(x)) \rightarrow B(x)\]
+    where $S(t)=$ ``$t$ is a student in SAI'', $H(t)=$ ``$t$ studies hard'', and $B(t)=$ ``$t$ gets a very bad score''. Note that the sentence in natural language contains the phrase ``Even if'', which is a bit tricky. We can rewrite the sentence as ``For every student in SAI, if he or she does not study hard, then he or she will get a very bad score''. That's why we used the universal quantifier $\forall$ and the implication $\rightarrow$.
+\end{example}
+
+\begin{example}
+    Let's consider how to express the classic mathematical statement ``There is a unique $x$ such that $P(x)$'' using quantifiers and logical connectives. We can express it as follows:
+    \[\exists x\quad (P(x) \wedge \forall y\quad (P(y) \rightarrow y = x))\]
+    This proposition states that there exists an $x$ such that $P(x)$ is true, and for all $y$, if $P(y)$ is true, then $y$ must be equal to $x$. In other words, there is exactly one $x$ that satisfies the property $P$.
+\end{example}
+
+\section{Inference Rules}
+We start with a simple example. Suppose we have the following propositions:
+\begin{align*}
+    p\colon &T\text{ is connected and has no simple circuits.} \\
+    q\colon &T\text{ is connected.}
+\end{align*}
+From $p$, we can infer $q$. In other words, if $p$ is true, then $q$ must be true. We can write this inference in symbols: $p\wedge q \vdash q$. Note that in this example, we don't have to know the exact definition of $T$ being connected or having no simple circuits. We only need to know that $p$ implies $q$. This is the essence of inference rules.
+
+There is a special example: $\vdash p \vee \neg p$. No assumption is needed in this example. 
+
+We now define the new symbol $\vdash$ formally.
+
+\begin{definition}
+    If $\Phi$ is a set of propositions and $\psi$ is a proposition, then we write $\Phi \vdash \psi$ to represent that \emph{$\psi$ is derivable from $\Phi$}. $\vdash\psi$ is the shorthand for $\emptyset \vdash \psi$, and $\Phi, \phi_1, \dots, \phi_n \vdash \psi$ is the shorthand for $\Phi \cup \{\varphi_1, \dots, \varphi_n\} \vdash \psi$.
+\end{definition}
