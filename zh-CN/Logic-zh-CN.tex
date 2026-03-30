@@ -1,0 +1,71 @@
+\chapter{逻辑学}
+\section{逻辑连接词和量词}
+\begin{definition}
+    如果 $p$ 和 $q$ 是两个命题, 那么
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item $p$ 和 $q$ 的\textbf{合取}, 记为 $p \wedge q$, 是命题 ``$p$ 和 $q$''. $p \wedge q$ 当且仅当 $p$ 和 $q$ 都为真时为真, 否则为假. 
+        \item $p$ 和 $q$ 的\textbf{析取}, 记为 $p \vee q$, 是命题 ``$p$ 或 $q$''. $p \vee q$ 当且仅当 $p$ 和 $q$ 至少有一个为真时为真, 否则为假.
+        \item $p$ 的\textbf{否定}, 记为 $\neg p$, 是命题 ``非 $p$''. $\neg p$ 的真值与 $p$ 的真值相反. 
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    设 $p=$ ``现在正在下雨'' 和 $q=$ ``我有一把伞''. 那么 $p \wedge q$ 是命题 ``现在正在下雨并且我有一把伞'', $p \vee q$ 是命题 ``现在正在下雨或者我有一把伞'', $\neg p$ 是命题 ``现在没有下雨''.
+\end{example}
+
+\begin{definition}
+    定义两个量词如下:
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item \textbf{全称量词} $\forall$ 用来表示 ``对于所有'' 或 ``对于每一个''.
+        \item \textbf{存在量词} $\exists$ 用来表示 ``存在'' 或 ``对于某些''.
+    \end{enumerate}
+\end{definition}
+
+我们可以将量词与逻辑连接词组合起来, 以构造更复杂的命题.
+
+\begin{example}
+    令 $E(t)=$ ``$t$ 是偶数'' 和 $P(t)=$ ``$t$ 是质数''. 那么 $\exists t\quad (E(t) \wedge P(t))$ 是命题 ``存在一个 $t$, 使得 $t$ 是偶数且 $t$ 是质数''.
+\end{example}
+
+\begin{definition}
+    \textbf{条件语句} $p \rightarrow q$ 是指命题 ``若 $p$ 则 $q$'', 它当且仅当 $p$ 为真且 $q$ 为假时为假, 否则为真.
+\end{definition}
+
+$p \rightarrow q$ 也可以读作 ``$p$ 蕴涵 $q$'', 因此也叫做\textbf{蕴涵式}. 通常它与全称量词 $\forall$ 一起使用. 例如, $\forall t\quad (S(t) \rightarrow C(t))$ 是读作 ``对于所有 $t$, 若 $S(t)$ 则 $C(t)$''.
+
+既然 $\forall$ 与 $\rightarrow$ 配对, 那么 $\exists$ 与什么配对呢? 事实上, $\exists$ 与 $\wedge$ 配对. 例如, $\exists t\quad (U(t) \wedge M(t))$ 是命题 ``存在一个 $t$, 使得 $U(t)$ 和 $M(t)$ 都为真''. 如果我们设 $U(t)=$ ``$t$ 是一个美国学生'', $M(t)=$ ``$t$ 访问过墨西哥'', 那么 $\exists t\quad (U(t) \wedge M(t))$ 就是命题 ``存在一个访问过墨西哥的美国学生''.
+
+现在来考察一些比较复杂的例子.
+
+\begin{example}
+    自然语言 ``SAI 的每个学生都会被分配一位研究导师'' 可以翻译成以下命题:
+    \[\forall x\quad (S(x) \rightarrow \exists y\quad M(x, y))\]
+    其中 $S(t)=$ ``$t$ 是 SAI 的学生'', $M(t_1, t_2)=$ ``$t_2$ 是分配给 $t_1$ 的研究导师''.
+
+    自然语言 ``SAI 的某位学生如果不努力学习, 就会得到一个非常差的分数'' 可以翻译成以下命题:
+    \[\forall x\quad (S(x) \wedge \neg H(x)) \rightarrow B(x)\]
+    其中 $S(t)=$ ``$t$ 是 SAI 的学生'', $H(t)=$ ``$t$ 努力学习'', $B(t)=$ ``$t$ 得到一个非常差的分数''. 注意, 自然语言中的 ``某位'' 是个比较模糊不清的说法. 这个句子应当理解成 ``对于 SAI 的每个学生, 如果他 (她) 不努力学习, 那么他 (她) 就会得到一个非常差的分数''. 这就是为什么翻译使用了 $\forall$ 而非 $\exists$.
+\end{example}
+
+\begin{example}
+    现在来想想如何使用量词和逻辑连接词表达经典的数学命题 ``存在唯一一个 $x$, 使得 $P(x)$''. 这个命题可以表述为
+    \[\exists x\quad (P(x) \wedge \forall y\quad (P(y) \rightarrow y = x)).\]
+    这个命题的意思是存在一个 $x$, 使得 $P(x)$ 为真, 并且对于所有 $y$, 如果 $P(y)$ 为真, 那么 $y$ 必须等于 $x$. 换句话说, 满足性质 $P$ 的 $x$ 是唯一的.
+\end{example}
+
+\section{推理}
+我们从一个简单的例子开始. 假设有以下命题:
+\begin{align*}
+    p\colon &T\text{ 是连通的且没有简单回路.} \\
+    q\colon &T\text{ 是连通的.}
+\end{align*}
+
+可以从 $p$ 推出 $q$. 换句话说, 如果 $p$ 为真, 那么 $q$ 必须为真. 我们可以用符号来表示这个推理: $p\wedge q \vdash q$. 注意, 在本例中, 我们不需要知道连通图或者简单回路的确切定义, 而只需要知道 $p$ 蕴涵 $q$. 
+
+还有一个特殊的例子: $\vdash p \vee \neg p$. 在这个例子中, 不需要任何假设.
+
+下面正式定义符号 $\vdash$.
+
+\begin{definition}
+    如果 $\Phi$ 是一个命题集合, $\psi$ 是一个命题, 我们用 $\Phi \vdash \psi$ 表示 \textbf{$\Phi$ 可以推出 $\psi$}. $\vdash\psi$ 是 $\emptyset \vdash \psi$ 的简写, $\Phi, \phi_1, \dots, \phi_n \vdash \psi$ 是 $\Phi \cup \{\phi_1, \dots, \phi_n\} \vdash \psi$ 的简写.
+\end{definition}

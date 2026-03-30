@@ -53,18 +53,18 @@ We now consider some rather complex examples.
     This proposition states that there exists an $x$ such that $P(x)$ is true, and for all $y$, if $P(y)$ is true, then $y$ must be equal to $x$. In other words, there is exactly one $x$ that satisfies the property $P$.
 \end{example}
 
-\section{Inference Rules}
+\section{Inference}
 We start with a simple example. Suppose we have the following propositions:
 \begin{align*}
     p\colon &T\text{ is connected and has no simple circuits.} \\
     q\colon &T\text{ is connected.}
 \end{align*}
-From $p$, we can infer $q$. In other words, if $p$ is true, then $q$ must be true. We can write this inference in symbols: $p\wedge q \vdash q$. Note that in this example, we don't have to know the exact definition of $T$ being connected or having no simple circuits. We only need to know that $p$ implies $q$. This is the essence of inference rules.
+From $p$, we can infer $q$. In other words, if $p$ is true, then $q$ must be true. We can write this inference in symbols: $p\wedge q \vdash q$. Note that in this example, we don't have to know the exact definition of $T$ being connected or having no simple circuits. We only need to know that $p$ implies $q$. 
 
 There is a special example: $\vdash p \vee \neg p$. No assumption is needed in this example. 
 
 We now define the new symbol $\vdash$ formally.
 
 \begin{definition}
-    If $\Phi$ is a set of propositions and $\psi$ is a proposition, then we write $\Phi \vdash \psi$ to represent that \emph{$\psi$ is derivable from $\Phi$}. $\vdash\psi$ is the shorthand for $\emptyset \vdash \psi$, and $\Phi, \phi_1, \dots, \phi_n \vdash \psi$ is the shorthand for $\Phi \cup \{\varphi_1, \dots, \varphi_n\} \vdash \psi$.
+    If $\Phi$ is a set of propositions and $\psi$ is a proposition, then we write $\Phi \vdash \psi$ to represent that \emph{$\psi$ is derivable from $\Phi$}. $\vdash\psi$ is the shorthand for $\emptyset \vdash \psi$, and $\Phi, \phi_1, \dots, \phi_n \vdash \psi$ is the shorthand for $\Phi \cup \{\phi_1, \dots, \phi_n\} \vdash \psi$.
 \end{definition}
