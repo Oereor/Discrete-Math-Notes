@@ -69,3 +69,47 @@ $p \rightarrow q$ 也可以读作 ``$p$ 蕴涵 $q$'', 因此也叫做\textbf{蕴
 \begin{definition}
     如果 $\Phi$ 是一个命题集合, $\psi$ 是一个命题, 我们用 $\Phi \vdash \psi$ 表示 \textbf{$\Phi$ 可以推出 $\psi$}. $\vdash\psi$ 是 $\emptyset \vdash \psi$ 的简写, $\Phi, \phi_1, \dots, \phi_n \vdash \psi$ 是 $\Phi \cup \{\phi_1, \dots, \phi_n\} \vdash \psi$ 的简写.
 \end{definition}
+
+我们可以从具体例子中提炼出一些常见模式, 总结如下. 
+
+\begin{example}
+    如下推理规则也即所谓的 ``单步证明'':
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item $p\wedge q\vdash p$. 
+        \item $p\vdash p\vee q$.
+        \item $\vdash p\vee \neg p$.
+        \item $\forall x.\ M(x)\vdash M(c)$.
+        \item $M(c)\vdash \exists x.\ M(x)$.
+    \end{enumerate}
+\end{example}
+
+接下来看一些更复杂的例子.
+
+\begin{example}
+    考虑如下命题的证明:
+    \[\forall\varepsilon>0,\ \exists N, \forall n>N,\ \left|\frac{1}{n}\right|<\varepsilon.\]
+
+    \begin{proof}
+        给定 $\varepsilon>0$, 令 $N=\left[ \frac{1}{\varepsilon} \right]+1$. 那么对于所有 $n>N$, 有 $\left|\frac{1}{n}\right|=\frac{1}{n}<\frac{1}{N}<\varepsilon$. 
+    \end{proof}
+
+    证明步骤: 为了证明 $\forall\varepsilon>0,\ \exists N, \forall n>N,\ \left|\frac{1}{n}\right|<\varepsilon$, 只需证明若 $\varepsilon>0$, 则 $\exists N, \forall n>N,\ \left|\frac{1}{n}\right|<\varepsilon$.
+
+    这一步的逻辑是: 如果 $\Phi, P(x)\vdash Q(x)$, 那么 $\Phi\vdash \forall x.\ (P(x)\rightarrow Q(x))$. 
+    
+    \mbox{}
+
+    证明步骤: 为了证明 $\exists N, \forall n>N,\ \left|\frac{1}{n}\right|<\varepsilon$, 只需证明 $\forall n>\left[ \frac{1}{\varepsilon} \right]+1,\ \left|\frac{1}{n}\right|<\varepsilon$.
+
+    这一步的逻辑是: 如果 $\Phi\vdash P(t)$, 那么 $\Phi\vdash \exists x.\ P(x)$.
+\end{example}
+
+\begin{example}
+    在证明 $\sqrt{2}$ 是无理数时会用到下面这些推理:
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item 如果 $\Phi$ 不涉及 $x$ 和 $y$, $\psi_1$ 不涉及 $y$, 且 $\Phi, \psi_1, \psi_2, \psi_3\vdash\neg\chi$, 那么 $\Phi\vdash \neg\exists x(\psi_1\wedge\exists y(\psi_2\wedge\psi_3\wedge\chi))$.
+        \item 如果 $\Phi\vdash\psi$ 且 $\psi\vdash\chi$, 那么 $\Phi\vdash\chi$.
+        \item 如果 $\Phi,P(x)\vdash\chi$, 那么 $\Phi,\exists x.\ P(x)\vdash\chi$.
+    \end{enumerate}
+\end{example}
+

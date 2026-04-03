@@ -68,3 +68,46 @@ We now define the new symbol $\vdash$ formally.
 \begin{definition}
     If $\Phi$ is a set of propositions and $\psi$ is a proposition, then we write $\Phi \vdash \psi$ to represent that \emph{$\psi$ is derivable from $\Phi$}. $\vdash\psi$ is the shorthand for $\emptyset \vdash \psi$, and $\Phi, \phi_1, \dots, \phi_n \vdash \psi$ is the shorthand for $\Phi \cup \{\phi_1, \dots, \phi_n\} \vdash \psi$.
 \end{definition}
+
+We can extract some common patterns from concrete examples. Here is a summary. 
+
+\begin{example}
+    We have the following inference rules, the so-called ``single-step proofs'':
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item $p\wedge q\vdash p$. 
+        \item $p\vdash p\vee q$.
+        \item $\vdash p\vee \neg p$.
+        \item $\forall x.\ M(x)\vdash M(c)$.
+        \item $M(c)\vdash \exists x.\ M(x)$.
+    \end{enumerate}
+\end{example}
+
+Now let's take a look at some more complicated examples. 
+
+\begin{example}
+    Consider the proof of the following proposition: 
+    \[\forall\varepsilon>0,\ \exists N, \forall n>N,\ \left|\frac{1}{n}\right|<\varepsilon.\]
+
+    \begin{proof}
+        Given $\varepsilon>0$, let $N=\left[ \frac{1}{\varepsilon} \right]+1$. Then for all $n>N$, we have $\left|\frac{1}{n}\right|=\frac{1}{n}<\frac{1}{N}<\varepsilon$. 
+    \end{proof}
+
+    Proof step: In order to show $\forall\varepsilon>0,\ \exists N, \forall n>N,\ \left|\frac{1}{n}\right|<\varepsilon$, it suffices to show that if $\varepsilon>0$ then $\exists N, \forall n>N,\ \left|\frac{1}{n}\right|<\varepsilon$.
+
+    The logic behind this step: If $\Phi, P(x)\vdash Q(x)$ then $\Phi\vdash \forall x.\ (P(x)\rightarrow Q(x))$. 
+    
+    \mbox{}
+
+    Proof step: In order to show $\exists N, \forall n>N,\ \left|\frac{1}{n}\right|<\varepsilon$, it suffices to prove $\forall n>\left[ \frac{1}{\varepsilon} \right]+1,\ \left|\frac{1}{n}\right|<\varepsilon$.
+
+    The logic behind this step: If $\Phi\vdash P(t)$ then $\Phi\vdash \exists x.\ P(x)$.
+\end{example}
+
+\begin{example}
+    The following logics are used in the proof of irrationality of $\sqrt{2}$:
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item If $\Phi$ does not talk about $x$ and $y$, $\psi_1$ does not talk about $y$, and $\Phi, \psi_1, \psi_2, \psi_3\vdash\neg\chi$, then $\Phi\vdash \neg\exists x(\psi_1\wedge\exists y(\psi_2\wedge\psi_3\wedge\chi))$.
+        \item If $\Phi\vdash\psi$ and $\psi\vdash\chi$, then $\Phi\vdash\chi$.
+        \item If $\Phi,P(x)\vdash\chi$, then $\Phi,\exists x.\ P(x)\vdash\chi$.
+    \end{enumerate}
+\end{example}
