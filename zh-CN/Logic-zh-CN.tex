@@ -3,7 +3,7 @@
 \begin{definition}
     如果 $p$ 和 $q$ 是两个命题, 那么
     \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
-        \item $p$ 和 $q$ 的\textbf{合取}, 记为 $p \wedge q$, 是命题 ``$p$ 和 $q$''. $p \wedge q$ 当且仅当 $p$ 和 $q$ 都为真时为真, 否则为假. 
+        \item $p$ 和 $q$ 的\textbf{合取}, 记为 $p \wedge q$, 是命题 ``$p$ 且 $q$''. $p \wedge q$ 当且仅当 $p$ 和 $q$ 都为真时为真, 否则为假. 
         \item $p$ 和 $q$ 的\textbf{析取}, 记为 $p \vee q$, 是命题 ``$p$ 或 $q$''. $p \vee q$ 当且仅当 $p$ 和 $q$ 至少有一个为真时为真, 否则为假.
         \item $p$ 的\textbf{否定}, 记为 $\neg p$, 是命题 ``非 $p$''. $\neg p$ 的真值与 $p$ 的真值相反. 
     \end{enumerate}
@@ -67,7 +67,7 @@ $p \rightarrow q$ 也可以读作 ``$p$ 蕴涵 $q$'', 因此也叫做\textbf{蕴
 下面正式定义符号 $\vdash$.
 
 \begin{definition}
-    如果 $\Phi$ 是一个命题集合, $\psi$ 是一个命题, 我们用 $\Phi \vdash \psi$ 表示 \textbf{$\Phi$ 可以推出 $\psi$}. $\vdash\psi$ 是 $\emptyset \vdash \psi$ 的简写, $\Phi, \phi_1, \dots, \phi_n \vdash \psi$ 是 $\Phi \cup \{\phi_1, \dots, \phi_n\} \vdash \psi$ 的简写.
+    如果 $\Phi$ 是一个命题集合, $\psi$ 是一个命题, 我们用 $\Phi \vdash \psi$ 表示 \textbf{$\Phi$ 可以推出 $\psi$}. $\vdash\psi$ 是 $\emptyset \vdash \psi$ 的简写; $\Phi, \phi_1, \dots, \phi_n \vdash \psi$ 是 $\Phi \cup \{\phi_1, \dots, \phi_n\} \vdash \psi$ 的简写.
 \end{definition}
 
 我们可以从具体例子中提炼出一些常见模式, 总结如下. 
@@ -108,7 +108,7 @@ $p \rightarrow q$ 也可以读作 ``$p$ 蕴涵 $q$'', 因此也叫做\textbf{蕴
     在证明 $\sqrt{2}$ 是无理数时会用到下面这些推理:
     \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
         \item 如果 $\Phi$ 不涉及 $x$ 和 $y$, $\psi_1$ 不涉及 $y$, 且 $\Phi, \psi_1, \psi_2, \psi_3\vdash\neg\chi$, 那么 $\Phi\vdash \neg\exists x(\psi_1\wedge\exists y(\psi_2\wedge\psi_3\wedge\chi))$.
-        \item 如果 $\Phi\vdash\psi$ 且 $\psi\vdash\chi$, 那么 $\Phi\vdash\chi$.
+        \item 如果 $\Phi\vdash\psi$ 且 $\Phi,\psi\vdash\chi$, 那么 $\Phi\vdash\chi$.
         \item 如果 $\Phi,P(x)\vdash\chi$, 那么 $\Phi,\exists x.\ P(x)\vdash\chi$.
     \end{enumerate}
 \end{example}

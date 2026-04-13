@@ -107,7 +107,27 @@ Now let's take a look at some more complicated examples.
     The following logics are used in the proof of irrationality of $\sqrt{2}$:
     \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
         \item If $\Phi$ does not talk about $x$ and $y$, $\psi_1$ does not talk about $y$, and $\Phi, \psi_1, \psi_2, \psi_3\vdash\neg\chi$, then $\Phi\vdash \neg\exists x(\psi_1\wedge\exists y(\psi_2\wedge\psi_3\wedge\chi))$.
-        \item If $\Phi\vdash\psi$ and $\psi\vdash\chi$, then $\Phi\vdash\chi$.
+        \item If $\Phi\vdash\psi$ and $\Phi,\psi\vdash\chi$, then $\Phi\vdash\chi$.
         \item If $\Phi,P(x)\vdash\chi$, then $\Phi,\exists x.\ P(x)\vdash\chi$.
     \end{enumerate}
 \end{example}
+
+We now present some inference rules in a more systematic way.
+
+\begin{definition}
+    \mbox{}
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item \textsc{assumption}. If $\varphi\in\Phi$, then $\Phi\vdash\varphi$.
+        \item \textsc{weakening}. If $\Phi\subseteq\Phi'$ and $\Phi\vdash\varphi$, then $\Phi'\vdash\varphi$.
+        \item \textsc{substitution}. If $\Phi\vdash\psi$ and $\Phi,\psi\vdash\chi$, then $\Phi\vdash\chi$.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    \mbox{}
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item \textsc{add-intro}. $\varphi,\psi\vdash\varphi\wedge\psi$. 
+        \item \textsc{add-elim1}. $\varphi\wedge\psi\vdash\varphi$.
+        \item \textsc{add-elim2}. $\varphi\wedge\psi\vdash\psi$.
+    \end{enumerate}
+\end{definition}
