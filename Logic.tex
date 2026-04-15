@@ -112,7 +112,7 @@ Now let's take a look at some more complicated examples.
     \end{enumerate}
 \end{example}
 
-We now present some inference rules in a more systematic way.
+We now dive into propositional logic. 
 
 \begin{definition}
     \mbox{}
@@ -123,11 +123,87 @@ We now present some inference rules in a more systematic way.
     \end{enumerate}
 \end{definition}
 
+\begin{example}
+    Let's prove the following derivations using \textsc{assumption}, \textsc{weakening}, and \textsc{substitution}. 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item $\varphi\vdash\varphi$.
+        \item If $\varphi\vdash\psi$ and $\psi\vdash\chi$, then $\varphi\vdash\chi$.
+        \item If $\Phi, \varphi\vdash\psi$ and $\Phi, \psi\vdash\chi$, then $\Phi, \varphi\vdash\chi$.
+    \end{enumerate}
+\end{example}
+
+\begin{proof}
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item $\varphi\vdash\varphi$ (by \textsc{assumption}).
+        \item (1) $\varphi\vdash\psi$ (by hypothesis). 
+        
+        (2) $\psi\vdash\chi$ (by hypothesis). 
+        
+        (3) $\varphi, \psi\vdash\chi$ (by \textsc{weakening} and (2)). 
+        
+        (4) $\varphi\vdash\chi$ (by \textsc{substitution} and (1) and (3)).
+        \item (1) $\Phi, \varphi\vdash\psi$ (by hypothesis). 
+        
+        (2) $\Phi, \psi\vdash\chi$ (by hypothesis). 
+        
+        (3) $\Phi, \varphi, \psi\vdash\chi$ (by \textsc{weakening} and (2)). 
+        
+        (4) $\Phi, \varphi\vdash\chi$ (by \textsc{substitution} and (1) and (3)).
+    \end{enumerate}
+\end{proof}
+
 \begin{definition}
     \mbox{}
     \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
-        \item \textsc{add-intro}. $\varphi,\psi\vdash\varphi\wedge\psi$. 
-        \item \textsc{add-elim1}. $\varphi\wedge\psi\vdash\varphi$.
-        \item \textsc{add-elim2}. $\varphi\wedge\psi\vdash\psi$.
+        \item \textsc{and-intro}. $\varphi,\psi\vdash\varphi\wedge\psi$. 
+        \item \textsc{and-elim1}. $\varphi\wedge\psi\vdash\varphi$.
+        \item \textsc{and-elim2}. $\varphi\wedge\psi\vdash\psi$.
     \end{enumerate}
 \end{definition}
+
+\begin{example}
+    Let's prove the following derivations. 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item If $\Phi\vdash\psi$ and $\Phi\vdash\chi$, then $\Phi\vdash\psi\wedge\chi$.
+        \item If $\Phi\vdash\psi\wedge\chi$, then $\Phi\vdash\psi$ and $\Phi\vdash\chi$.
+        \item If $\Phi,\psi_1\wedge\psi_2\vdash\chi$, then $\Phi,\psi_1,\psi_2\vdash\chi$.
+        \item If $\Phi, \psi_1\vdash\chi$, then $\Phi, \psi_1\wedge\psi_2\vdash\chi$.
+        \item If $\Phi, \psi_2\vdash\chi$, then $\Phi, \psi_1\wedge\psi_2\vdash\chi$.
+    \end{enumerate}
+\end{example}
+
+\begin{proof}
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item (1) $\psi,\chi\vdash\psi\wedge\chi$ (by \textsc{and-intro}). 
+        
+        (2) $\Phi,\psi,\chi\vdash\psi\wedge\chi$ (by \textsc{weakening} and (1)). 
+
+        (3) $\Phi\vdash\chi$ (by hypothesis). 
+        
+        (4) $\Phi,\psi\vdash\chi$ (by \textsc{weakening} and (3)). 
+        
+        (5) $\Phi,\psi\vdash\psi\wedge\chi$ (by \textsc{substitution} and (4) and (2)). 
+        
+        (6) $\Phi\vdash\psi$ (by hypothesis). 
+        
+        (7) $\Phi\vdash\psi\wedge\chi$ (by \textsc{substitution} and (6) and (5)).
+        \item (1) $\Phi\vdash\psi\wedge\chi$ (by hypothesis). 
+        
+        (2) $\psi\wedge\chi\vdash\psi$ (by \textsc{and-elim1}). 
+        
+        (3) $\Phi, \psi\wedge\chi\vdash\psi$ (by \textsc{weakening} and (2)). 
+        
+        (4) $\Phi\vdash\psi$ (by \textsc{substitution} and (1) and (3)). 
+        
+        The proof of $\Phi\vdash\chi$ is similar.
+        \item (1) $\psi_1,\psi_2\vdash\psi_1\wedge\psi_2$ (by \textsc{and-intro}). 
+        
+        (2) $\Phi,\psi_1,\psi_2\vdash\psi_1\wedge\psi_2$ (by \textsc{weakening} and (1)). 
+        
+        (3) $\Phi, \psi_1\wedge\psi_2\vdash\chi$ (by hypothesis). 
+        
+        (4) $\Phi,\psi_1,\psi_2,\psi_1\wedge\psi_2\vdash\chi$ (by \textsc{weakening} and (3)). 
+        
+        (5) $\Phi,\psi_1,\psi_2\vdash\chi$ (by \textsc{substitution} and (2) and (4)).
+    \end{enumerate}
+\end{proof}
