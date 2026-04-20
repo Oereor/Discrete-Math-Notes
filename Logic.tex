@@ -161,7 +161,7 @@ We now dive into propositional logic.
     \end{enumerate}
 \end{definition}
 
-\begin{example}
+\begin{example}\label{eg:and-intro examples}
     Let's prove the following derivations. 
     \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
         \item If $\Phi\vdash\psi$ and $\Phi\vdash\chi$, then $\Phi\vdash\psi\wedge\chi$.
@@ -206,4 +206,106 @@ We now dive into propositional logic.
         
         (5) $\Phi,\psi_1,\psi_2\vdash\chi$ (by \textsc{substitution} and (2) and (4)).
     \end{enumerate}
+
+    \mbox{}
+
+    Proof of (d) and (e) is left as an exercise for the reader.
 \end{proof}
+
+\begin{definition}
+    We write $\varphi\dashv\vdash\psi$ if and only if both $\varphi\vdash\psi$ and $\psi\vdash\varphi$ hold. 
+\end{definition}
+
+\begin{theorem}
+    We have the following theorems: 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item \textup{\textsc{and-L}}. If $\Phi, \psi_1,\psi_2\vdash\chi$, then $\Phi, \psi_1\wedge\psi_2\vdash\chi$.
+        \item \textup{\textsc{and-comm}}. $\psi_1\wedge\psi_2\dashv\vdash\psi_2\wedge\psi_1$.
+        \item \textup{\textsc{and-assoc}}. $(\psi_1\wedge\psi_2)\wedge\psi_3\dashv\vdash\psi_1\wedge(\psi_2\wedge\psi_3)$.
+    \end{enumerate}
+\end{theorem}
+
+Note that \textsc{and-L} is the converse of statement (c) in \cref{eg:and-intro examples}. Statement (a) is also called \textsc{and-R}. 
+
+\begin{proof}
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item (1) $\Phi,\psi_1,\psi_2\vdash\chi$ (hypothesis). 
+        
+        (2) $\Phi, \psi_1\wedge\psi_2\vdash\psi_1$ (\textsc{and-elim1}). 
+        
+        (3) $\Phi, \psi_1\wedge\psi_2\vdash\psi_2$ (\textsc{and-elim2}). 
+        
+        (4) $\Phi,\psi_1\wedge\psi_2, \psi_1, \psi_2\vdash\chi$ (\textsc{weakening} and (1)). 
+        
+        (5) $\Phi, \psi_1\wedge\psi_2, \psi_1\vdash\psi_2$ (\textsc{weakening} and (3)). 
+        
+        (6) $\Phi, \psi_1\wedge\psi_2, \psi_1\vdash\chi$ (\textsc{substitution} and (5) and (4)). 
+        
+        (7) $\Phi, \psi_1\wedge\psi_2\vdash\chi$ (\textsc{substitution} and (2) and (6)).
+        \item It suffices to show that $\psi_1\wedge\psi_2\vdash\psi_2\wedge\psi_1$. 
+
+        (1) $\psi_1\wedge\psi_2\vdash\psi_1$ (\textsc{and-elim1}). 
+        
+        (2) $\psi_1\wedge\psi_2\vdash\psi_2$ (\textsc{and-elim2}). 
+        
+        (3) $\psi_1\wedge\psi_2\vdash\psi_2\wedge\psi_1$ (\textsc{and-R}, (2) and (1)).
+        \item 
+    \end{enumerate}
+\end{proof}
+
+\begin{example}
+    We shall prove the following derivation: If $\psi_1\vdash\psi_2$ and $\chi_1\vdash\chi_2$, then $\psi_1\wedge\chi_1\vdash\psi_2\wedge\chi_2$.
+\end{example}
+
+\begin{proof}
+    (1) $\psi_1\vdash\psi_2$ (hypothesis). 
+    
+    (2) $\psi_1,\chi_1\vdash\psi_2$ (\textsc{weakening} and (1)). 
+    
+    (3) $\chi_1\vdash\chi_2$ (hypothesis). 
+    
+    (4) $\psi_1,\chi_1\vdash\chi_2$ (\textsc{weakening} and (3)). 
+    
+    (5) $\psi_1,\chi_1\vdash\psi_2\wedge\chi_2$ (\textsc{and-R}, (2) and (4)). 
+    
+    (6) $\psi_1\wedge\chi_1\vdash\psi_2\wedge\chi_2$ (\textsc{and-L}, (5)).
+\end{proof}
+
+\begin{definition}
+    We define the symbols \textsc{or-intro1}, \textsc{or-intro2}, and \textsc{or-elim} (also \textsc{or-L}) as follows: 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item \textsc{or-intro1}. $\varphi\vdash\varphi\vee\psi$.
+        \item \textsc{or-intro2}. $\psi\vdash\varphi\vee\psi$.
+        \item \textsc{or-elim} (\textsc{or-L}). If $\Phi,\psi_1\vdash\chi$ and $\Phi,\psi_2\vdash\chi$, then $\Phi,\psi_1\vee\psi_2\vdash\chi$.
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    We have some deduced rules for disjunction:
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item \textsc{or-R1}. If $\Phi\vdash\psi$, then $\Phi\vdash\psi\vee\chi$.
+        \item \textsc{or-R2}. If $\Phi\vdash\chi$, then $\Phi\vdash\psi\vee\chi$.
+    \end{enumerate}
+\end{example}
+
+\begin{proof}
+    We prove \textsc{or-R1} only; the proof of \textsc{or-R2} is similar. 
+
+    (1) $\psi\vdash\psi\vee\chi$ (\textsc{or-intro1}). 
+    
+    (2) $\Phi,\psi\vdash\psi\vee\chi$ (\textsc{weakening} and (1)). 
+    
+    (3) $\Phi\vdash\psi$ (hypothesis). 
+    
+    (4) $\Phi\vdash\psi\vee\chi$ (\textsc{substitution}, (3) and (2)).
+\end{proof}
+
+Similar to conjuction, disjuction is also commutative and associative, as demonstrated by the following theorem. 
+
+\begin{theorem}
+    The commutative and associative laws for disjunction hold. 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item \textup{\textsc{or-comm}}. $\psi_1\vee\psi_2\dashv\vdash\psi_2\vee\psi_1$.
+        \item \textup{\textsc{or-assoc}}. $(\psi_1\vee\psi_2)\vee\psi_3\dashv\vdash\psi_1\vee(\psi_2\vee\psi_3)$.
+    \end{enumerate}
+\end{theorem}
