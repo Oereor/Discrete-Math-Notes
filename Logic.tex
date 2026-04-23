@@ -309,3 +309,141 @@ Similar to conjuction, disjuction is also commutative and associative, as demons
         \item \textup{\textsc{or-assoc}}. $(\psi_1\vee\psi_2)\vee\psi_3\dashv\vdash\psi_1\vee(\psi_2\vee\psi_3)$.
     \end{enumerate}
 \end{theorem}
+
+\begin{theorem}
+    The distributive laws of both $\wedge$ over $\vee$ and $\vee$ over $\wedge$ hold.
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item $\varphi\wedge(\psi\vee\chi)\dashv\vdash(\varphi\wedge\psi)\vee(\varphi\wedge\chi)$.
+        \item $\varphi\vee(\psi\wedge\chi)\dashv\vdash(\varphi\vee\psi)\wedge(\varphi\vee\chi)$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    We first prove the forward direction of (a). 
+
+    (1) $\varphi\wedge(\psi\vee\chi)\vdash\varphi$ (\textsc{and-elim1}). 
+    
+    (2) $\varphi\wedge(\psi\vee\chi)\vdash\psi\vee\chi$ (\textsc{and-elim2}). 
+    
+    (3) $\varphi,\psi\vdash\varphi\wedge\psi$ (\textsc{and-intro}). 
+    
+    (4) $\varphi,\chi\vdash\varphi\wedge\chi$ (\textsc{and-intro}). 
+    
+    (5) $\varphi,\psi\vdash(\varphi\wedge\psi)\vee(\varphi\wedge\chi)$ (\textsc{or-intro1} and (3)). 
+    
+    (6) $\varphi,\chi\vdash(\varphi\wedge\psi)\vee(\varphi\wedge\chi)$ (\textsc{or-intro2} and (4)). 
+    
+    (7) $\varphi,\psi\vee\chi\vdash(\varphi\wedge\psi)\vee(\varphi\wedge\chi)$ (\textsc{or-L} and (5) and (6)). 
+    
+    (8) $\varphi\wedge(\psi\vee\chi)\vdash(\varphi\wedge\psi)\vee(\varphi\wedge\chi)$ (\textsc{and-L} and (7)).
+
+    \mbox{}
+
+    Now the backward direction of (a).
+
+    (1) $\varphi,\psi\vdash\varphi$ (\textsc{assumption})
+
+    (2) $\varphi,\psi\vdash\psi$ (\textsc{assumption})
+
+    (3) $\varphi,\psi\vdash\psi\vee\chi$ (\textsc{or-intro1} and (2))
+
+    (4) $\varphi,\psi\vdash\varphi\wedge(\psi\vee\chi)$ (\textsc{and-R}, (1) and (3))
+
+    (5) $\varphi\wedge\psi\vdash\varphi\wedge(\psi\vee\chi)$ (\textsc{and-L}, (4))
+
+    (6) Similar to (5), $\varphi\wedge\chi\vdash\varphi\wedge(\psi\vee\chi)$.
+
+    (7) $(\varphi\wedge\psi)\vee(\varphi\wedge\chi)\vdash\varphi\wedge(\psi\vee\chi)$ (\textsc{or-L}, (5) and (6))
+
+    \mbox{}
+
+    Then the forward direction of (b). 
+
+    (1) $\varphi\wedge\chi\vdash\varphi$ (\textsc{and-elim1}). 
+    
+    (2) $\varphi\wedge\chi\vdash\chi$ (\textsc{and-elim2}). 
+    
+    (3) $\varphi\wedge\chi\vdash\varphi\vee\psi$ (\textsc{or-intro1} and (1)). 
+    
+    (4) $\varphi\wedge\chi\vdash\varphi\vee\chi$ (\textsc{or-intro2} and (2)). 
+    
+    (5) $\varphi\wedge\chi\vdash(\varphi\vee\psi)\wedge(\varphi\vee\chi)$ (\textsc{and-R}, (3) and (4)). 
+
+    (6) $\varphi\vdash\varphi\vee\psi$ (\textsc{or-intro1}). 
+    
+    (7) $\varphi\vdash\varphi\vee\chi$ (\textsc{or-intro2}). 
+    
+    (8) $\varphi\vdash(\varphi\vee\psi)\wedge(\varphi\vee\chi)$ (\textsc{and-R}, (6) and (7)). 
+
+    (9) $\varphi\vee(\psi\wedge\chi)\vdash(\varphi\vee\psi)\wedge(\varphi\vee\chi)$ (\textsc{or-L}, (5) and (8)).
+
+    \mbox{}
+
+    And finally the backward direction of (b). 
+
+    (1) $\varphi\vdash\varphi\vee(\psi\wedge\chi)$ (\textsc{or-intro1}). 
+    
+    (2) $\varphi,\varphi\vee\chi\vdash\varphi\vee(\psi\wedge\chi)$ (\textsc{weakening} and (1)). 
+    
+    (3) $\varphi,\varphi\vdash\varphi\vee(\psi\wedge\chi)$ (\textsc{weakening} and (1)). 
+    
+    (4) $\psi,\chi\vdash\psi\wedge\chi$ (\textsc{and-intro}). 
+    
+    (5) $\psi,\chi\vdash\varphi\vee(\psi\wedge\chi)$ (\textsc{or-R2} and (4)). 
+    
+    (6) $\psi,\varphi\vee\chi\vdash\varphi\vee(\psi\wedge\chi)$ (\textsc{or-L} and (5) and (3)). 
+    
+    (7) $\varphi\vee\psi,\varphi\vee\chi\vdash\varphi\vee(\psi\wedge\chi)$ (\textsc{or-L} and (2) and (6)). 
+    
+    (8) $(\varphi\vee\psi)\wedge(\varphi\vee\chi)\vdash\varphi\vee(\psi\wedge\chi)$ (\textsc{and-L} and (7)).
+\end{proof}
+
+We also have the so-called ``absorption'' laws for conjunction and disjunction.
+
+\begin{theorem}
+    A proposition can be ``absorbed'' by the following laws. 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item $\varphi\wedge(\varphi\vee\psi)\dashv\vdash\varphi$.
+        \item $\varphi\vee(\varphi\wedge\psi)\dashv\vdash\varphi$.
+    \end{enumerate}
+\end{theorem}
+
+We also have some rules for negation.
+
+\begin{definition}
+    There are two basic rules. 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item If $\Phi\vdash\psi$ and $\Phi\vdash\neg\psi$, then $\Phi\vdash\chi$ for any proposition $\chi$. (\emph{Principle of Explosion})
+        \item $\vdash\varphi\vee\neg\varphi$. (\emph{Law of Excluded Middle})
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    Based on the above rules, we have the following theorems:
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item If $\Phi,\neg\varphi\vdash\psi$ and $\Phi,\varphi\vdash\psi$, then $\Phi\vdash\psi$.
+        \item $\varphi\dashv\vdash\neg\neg\varphi$.
+    \end{enumerate}
+\end{theorem}
+
+The following theorems are the laws of contrapositive. 
+
+\begin{theorem}
+    The following statements hold (actually they are equivalent to each other):
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item If $\Phi,\psi\vdash\chi$, then $\Phi,\neg\chi\vdash\neg\psi$.
+        \item If $\Phi,\neg\psi\vdash\chi$, then $\Phi,\neg\chi\vdash\psi$.
+        \item If $\Phi,\psi\vdash\neg\chi$, then $\Phi,\chi\vdash\neg\psi$.
+        \item If $\Phi,\neg\psi\vdash\neg\chi$, then $\Phi,\chi\vdash\psi$.
+    \end{enumerate}
+\end{theorem}
+
+The following theorems are the famous \emph{De Morgan's laws}.
+
+\begin{theorem}
+    Applying negation to a conjunction or a disjunction will flip the conjunction or disjunction and negate the propositions. 
+    \begin{enumerate}[itemindent=0ex, itemsep=0pt, label=\upshape{(\alph*)}]
+        \item $\neg(\varphi\wedge\psi)\vdash\neg\varphi\vee\neg\psi$.
+        \item $\neg(\varphi\vee\psi)\vdash\neg\varphi\wedge\neg\psi$.
+    \end{enumerate}
+\end{theorem}
